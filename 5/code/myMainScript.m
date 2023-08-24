@@ -26,7 +26,7 @@ end
 
 
 % caluclate A matrix
-create P1 and P2 matrix and calculate Transformation(A) matrix
+% create P1 and P2 matrix and calculate Transformation(A) matrix
 temp = ones(1,24);
  P_1 = [x1;y1;temp];
  P_2 = [x2;y2;temp];
