@@ -59,7 +59,7 @@ We have assumed that the mentioned document scanners are flatbed scanners and th
 			x_1-x_c\\y_1 - y_c\\1
 		\end{bmatrix}
 	\end{equation}
-	This procedure should be repeated to remove bleeding from the image of the other side too. Again, as the document is same with no stretching or bending, modelling scaling/shearing is not required.
+	Once we have established the alignment, we can now laterally invert both the images to remove ink bleeding from the image of the other side. Again, as the document is same with no stretching or bending, modelling scaling/shearing is not required with this approach.
 
 	If a negative scaling factor is not supported by the alignment system then we will have to use the next best model which is the affine model shown to be sufficient.
 \end{enumerate}
