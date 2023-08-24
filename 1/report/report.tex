@@ -9,7 +9,7 @@
 \usepackage{minted}
 \usepackage[colorlinks=true]{hyperref}
 
-\title{1}
+\title{1\vspace{-2em}}
 \date{}
 
 \begin{document}
@@ -36,11 +36,11 @@ We have assumed that the mentioned document scanners are flatbed scanners and th
 		\end{bmatrix}
 	\end{equation}
 	Instead, we should first laterally invert the image of the other side by using a scaling factor of $-1$ in the $X$ direction and $1$ in the $Y$ direction and then align the images using the rigid model making our system. This is achieved by incorporating a scaling matrix $S$ into our equations as follows:
-	\begin{equation}{\label{eq:rigidunequalscaling}}
+	\begin{align}{\label{eq:rigidunequalscaling}}
 		\begin{bmatrix}
 			x_2\\y_2\\1
 		\end{bmatrix}
-		=
+		&=
 		\underbrace{
 		\begin{bmatrix}
 			\cos\theta & -\sin\theta & t_x\\
@@ -58,7 +58,21 @@ We have assumed that the mentioned document scanners are flatbed scanners and th
 		\begin{bmatrix}
 			x_1-x_c\\y_1 - y_c\\1
 		\end{bmatrix}
-	\end{equation}
+		\\
+		\Rightarrow
+		\begin{bmatrix}
+			x_2\\y_2\\1
+		\end{bmatrix}
+		&=
+		\begin{bmatrix}
+			-\cos\theta & -\sin\theta & t_x\\
+			-\sin\theta &  \cos\theta & t_y\\
+			 0          &  0          & 1\\
+		\end{bmatrix}
+		\begin{bmatrix}
+			x_1-x_c\\y_1 - y_c\\1
+		\end{bmatrix}
+	\end{align}
 	Once we have established the alignment, we can now laterally invert both the images to remove ink bleeding from the image of the other side. Again, as the document is same with no stretching or bending, modelling scaling/shearing is not required with this approach.
 
 	If a negative scaling factor is not supported by the alignment system then we will have to use the next best model which is the affine model shown to be sufficient.
