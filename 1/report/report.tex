@@ -1,6 +1,6 @@
 \documentclass[a4paper]{article}
 \usepackage{microtype}
-\usepackage[DIV=10]{typearea}
+\usepackage[DIV=9]{typearea}
 \usepackage[parfill]{parskip}
 \setlength{\parindent}{0em}
 \usepackage{enumitem}
@@ -9,21 +9,19 @@
 \usepackage{minted}
 \usepackage[colorlinks=true]{hyperref}
 
-\title{1\vspace{-2em}}
+\title{1}
 \date{}
 
 \begin{document}
 \maketitle
 We have assumed that the mentioned document scanners are flatbed scanners and that the paper is `flat'. Due to this flat nature of the scanner bed and paper, an affine motion model is sufficient for all cases, but the goal is to pick an `optimal' motion model.
 \begin{enumerate}[label=(\alph*)]
-	\item \label{a} Rigid (translation + rotation) motion model is suitable. But, the only possibilities are the document being shifted/rotated on the scanner bed. As the document is same with no stretching or bending, modelling scaling/shearing is not required.
-	\item Rigid and equal scaling in $X$, $Y$ directions is suitable. As $X$ and $Y$ resolutions for both scanners are same, let's assume the first scanner has a resolution $p \times p$ and the second scanner's resolution is $q \times q$. Now, in addition to translation and rotation discussed in \ref{a}, as the scanners have different resolutions, the image of the first scanner has to be scaled by a factor of $q/p$ in both the $X$ direction as well as the $Y$ direction. Again, as the document is same with no stretching or bending, modelling scaling/shearing is not required.
-	\item Rigid and unequal scaling in $X$, $Y$ directions is suitable. To remove bleeding artifacts in the image of one side of the page, it has to be aligned with the image of the other side and vice versa. This requires us to perform a lateral inversion to the image of the other side. For this, the rigid model is not sufficient. As for a rigid model given by the equation \ref{eq:rigid}; to perform a lateral inversion, the determinant of the matrix $A$ must be non-negative. But it can be calculated that $\operatorname{det}(A)=1 \nless 0$.
-	\begin{equation}{\label{eq:rigid}}
+	\item \label{a} Rigid (translation + rotation) motion model is suitable. But, the only possibilities are the document being shifted/rotated on the scanner bed. The corresponding equations of motion models are shown in \ref{eq:rigid}. As the document is same with no stretching or bending, modelling scaling/shearing is not required.
+	\begin{align}{\label{eq:rigid}}
 		\begin{bmatrix}
 			x_2\\y_2\\1
 		\end{bmatrix}
-		=
+		&=
 		\underbrace{
 		\begin{bmatrix}
 			\cos\theta & -\sin\theta & t_x\\
@@ -34,8 +32,47 @@ We have assumed that the mentioned document scanners are flatbed scanners and th
 		\begin{bmatrix}
 			x_1-x_c\\y_1 - y_c\\1
 		\end{bmatrix}
-	\end{equation}
-	Instead, we should first laterally invert the image of the other side by using a scaling factor of $-1$ in the $X$ direction and $1$ in the $Y$ direction and then align the images using the rigid model making our system. This is achieved by incorporating a scaling matrix $S$ into our equations as follows:
+	\end{align}
+	\item Rigid and equal scaling in $X$, $Y$ directions is suitable. As $X$ and $Y$ resolutions for both scanners are same, let's assume the first scanner has a resolution $p \times p$ and the second scanner's resolution is $q \times q$. Now, in addition to translation and rotation discussed in \ref{a}, as the scanners have different resolutions, the image of the first scanner has to be scaled by a factor of $q/p$ in both the $X$ direction as well as the $Y$ direction. These developments are shown in \ref{eq:rigidequalscaling} by incorporating a scaling matrix $S$ to the equation \ref{eq:rigid}. Again, as the document is same with no stretching or bending, modelling scaling/shearing is not required.
+	\begin{align}{\label{eq:rigidequalscaling}}
+		\begin{bmatrix}
+			x_2\\y_2\\1
+		\end{bmatrix}
+		&=
+		\underbrace{
+		\begin{bmatrix}
+			\cos\theta & -\sin\theta & t_x\\
+			\sin\theta & \cos\theta  & t_y\\
+			0          & 0           & 1\\
+		\end{bmatrix}
+		}_{A}
+		\underbrace{
+		\begin{bmatrix}
+			q/p & 0 & 0\\
+			 0 & q/p & 0\\
+			 0 & 0 & 1\\
+		\end{bmatrix}
+		}_{S}
+		\begin{bmatrix}
+			x_1-x_c\\y_1 - y_c\\1
+		\end{bmatrix}
+		\\
+		\Rightarrow
+		\begin{bmatrix}
+			x_2\\y_2\\1
+		\end{bmatrix}
+		&=
+		\begin{bmatrix}
+			(q/p)\cdot\cos\theta & -(q/p)\cdot\sin\theta & t_x\\
+			(q/p)\cdot\sin\theta & (q/p)\cdot\cos\theta  & t_y\\
+			0                    & 0                     & 1\\
+		\end{bmatrix}
+		\begin{bmatrix}
+			x_1-x_c\\y_1 - y_c\\1
+		\end{bmatrix}
+	\end{align}
+	\item Rigid and unequal scaling in $X$, $Y$ directions is suitable. To remove bleeding artifacts in the image of one side of the page, it has to be aligned with the image of the other side and vice versa. This requires us to perform a lateral inversion to the image of the other side. For this, the rigid model is not sufficient. As for a rigid model given by the equation \ref{eq:rigid}; to perform a lateral inversion, the determinant of the matrix $A$ must be non-negative. But it can be calculated that $\operatorname{det}(A)=1 \nless 0$.
+	Instead, we should first laterally invert the image of the other side by using a scaling factor of $-1$ in the $X$ direction and $1$ in the $Y$ direction and then align the images using the rigid model making our system. The equations update as follows:
 	\begin{align}{\label{eq:rigidunequalscaling}}
 		\begin{bmatrix}
 			x_2\\y_2\\1
@@ -66,8 +103,8 @@ We have assumed that the mentioned document scanners are flatbed scanners and th
 		&=
 		\begin{bmatrix}
 			-\cos\theta & -\sin\theta & t_x\\
-			-\sin\theta &  \cos\theta & t_y\\
-			 0          &  0          & 1\\
+			-\sin\theta & \cos\theta  & t_y\\
+			0           & 0           & 1\\
 		\end{bmatrix}
 		\begin{bmatrix}
 			x_1-x_c\\y_1 - y_c\\1
