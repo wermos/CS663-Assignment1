@@ -1,6 +1,6 @@
 \documentclass[a4paper]{article}
 \usepackage{microtype}
-\usepackage[DIV=10]{typearea}
+\usepackage[DIV=9]{typearea}
 \usepackage[parfill]{parskip}
 \setlength{\parindent}{0em}
 \usepackage{enumitem}
@@ -14,5 +14,21 @@
 
 \begin{document}
 \maketitle
+The origin of MATLAB's coordinate system is at the top-left corner of the image. The positive $x-$axis goes horizontally right and the positive $y-$axis goes vertically down from the origin of MATLAB's coordinate system. This behaviour is quite similar to the provided image as it also has its positive axes going horizontally right and vertically down. Hence, a translation and scaling operation is needed to convert from MATLAB's coordinate system to the coordinate system of the graph. It also means the $x$ and $y$ transformations can be calculated independently.
 
+Let's assume the vertical labelled line in graph is $x=m$ and the horizontal labelled line is $y=n$. Now, our points of interest are the end labels of each labelled line and the point of their intersection. The known coordinates of these points are shown in the table \ref{tab:poi}.
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}
+	Point & Graph $(x,y)$ coordinates & MATLAB $(x,y)$ coordinates\\\hline
+	1 & $(m, 640)$ & $(143, 1594)$\\
+	2 & $(m, n)$ & $(143, 1520)$\\
+	3 & $(m, 540)$ & $(143, 32)$\\
+	4 & $(-10, n)$ & $(411, 1520)$\\
+	5 & $(10, n)$ & $(730, 1520)$
+\end{tabular}
+\caption{Comparison of graph and MATLAB coordinates for points of interest}
+\label{tab:poi}
+\end{table}
+% From \ref{tab:poi}, it is clear that the point of intersection $(m,n)$ is $(143, 1520)$ in MATLAB's coordinate system. Also, $m$ and $n$ can be found by scaling
 \end{document}
