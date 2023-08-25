@@ -25,7 +25,9 @@ Let $I$, $J$, $K$ be the random variables for these three images respectively. N
 		\P_K(k) &= \sum_{i=-\infty}^{\infty} \P_{IJ}(i,k-i) &(\text{since } \mathbbm{1}_{i+j=k} = 0 \text{ for} j\neq k-i)
 	\end{aligned}
 \end{equation}
-Hence the PMF of image $I+J$ for each location is given by $\displaystyle\sum_{i=-\infty}^{\infty} \P_{IJ}(i,k-i)$. Now, we can see that there is a presence of $i$ and $k-i$ akin to a convolution. In fact, we can make this idea more robust if both the distributions $p_I(i)$ and $p_J(j)$ were independent. Then, 
+Hence the PMF of image $I+J$ for each location is given by $\displaystyle\sum_{i=-\infty}^{\infty} \P_{IJ}(i,k-i)$.
+
+Now, we can see that there is a presence of $i$ and $k-i$ akin to a convolution. In fact, we can make this idea more robust if both the distributions $p_I(i)$ and $p_J(j)$ were independent. Then, 
 \begin{equation}
 	\begin{aligned}
 		\P_K(k) &= \sum_{i=-\infty}^{\infty} \P_{I}(i) \cdot \P_{J}(k-i) &\\

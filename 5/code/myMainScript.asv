@@ -102,8 +102,16 @@ function i = bilinear_interpolation(x, y,m,n,img1)
     x_ceil = max(1,min(m,ceil(x)));
     x_floor = max(1,min(m,floor(x)));
 
-    y_ceil = max(1,min(n,ceil(y)));
-    y_floor = max(1,min(n,floor(y)));
+    y_ceil = max(1,min(m,ceil(y)));
+    y_floor = max(1,min(m,floor(y)));
+
+    if(x_floor > m)
+        x_floor = m;
+    end
+
+    if(y_floor > n)
+        y_floor = n;
+    end
 
     i = (y_ceil-y)*(x_ceil-x)*img1(x_floor, y_floor) + (y_ceil-y)*(x-x_floor)*img1(x_ceil, y_floor) + (y-y_floor)*(x_ceil-x)*img1(x_floor, y_ceil) + (y-y_floor)*(x-x_floor)*img1(x_ceil, y_ceil);
 
