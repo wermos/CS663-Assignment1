@@ -66,12 +66,12 @@ Solving this gives
 	\end{bmatrix}
 \end{equation}
 Hence, the equations that convert MATLAB's coordinate system to the coordinate system of the graph is
-\begin{equation}
+\begin{equation}{\label{eq:conversion}}
 	\begin{aligned}
 		g_x &=  20/319 \cdot m_x - 11410/319\\
 		g_y &=  50/781 \cdot m_y + 420140/781
 	\end{aligned}
-\end{equation}{\label{eq:conversion}}
+\end{equation}
 \begin{minted}[frame=single, breaklines]{matlab}
 A = sym([0 0 1594 1;0 0 32 1; 411 1 0 0; 730 1 0 0]);
 A\[640;540;-10;10]
@@ -189,13 +189,14 @@ The table, its rewritten form and equations are provided below (\ref{tab:poibett
 	\end{bmatrix}
 \end{equation}
 % \end{comment}
-Resultant equations considering the inconsistency with labels is as follows: (similar equations)
+Resultant equations considering the inconsistency with the given labels is as follows:
 \begin{equation}{\label{eq:conversionbetter}}
 	\begin{aligned}
 		g_x &=  0.0627 \cdot m_x - 35.7966\\
 		g_y &=  0.0642 \cdot m_y + 537.3632
 	\end{aligned}
-\end{equation}{\label{eq:conversion}}
+\end{equation}
+Note the similar variable values to \ref{eq:conversion}.
 \begin{minted}[frame=single, breaklines]{matlab}
 A = [0 0 32 1; 0 0 124 1; 0 0 188 1; 0 0 264 1; 0 0 364 1; 0 0 434 1; 0 0 511 1; 0 0 589 1; 0 0 668 1; 0 0 743 1; 0 0 821 1; 0 0 899 1; 0 0 977 1; 0 0 1054 1; 0 0 1132 1; 0 0 1209 1; 0 0 1286 1; 0 0 1365 1; 0 0 1441 1; 0 0 1516 1; 0 0 1594 1; 411 1 0 0; 491 1 0 0; 571 1 0 0; 650 1 0 0; 730 1 0 0]
 A\[540;545;550;555;560;565;570;575;580;585;590;595;600;605;610;615;620;625; 630;635;640;-10;-5;0;5;10]
