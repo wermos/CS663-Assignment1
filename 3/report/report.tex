@@ -5,11 +5,11 @@
 \setlength{\parindent}{0em}
 \usepackage{enumitem}
 \usepackage{comment}
-\usepackage{amsmath, amssymb, amsfonts, amsthm, mathtools, nccmath}
+\usepackage{amsmath, amssymb, amsfonts, amsthm, mathtools, nccmath, bbm}
 \usepackage{subcaption}
 \usepackage{minted}
 \usepackage[colorlinks=true]{hyperref}
-\renewcommand{\P}{\textsf{P}}
+\renewcommand{\P}{\textsf{Prob}}
 
 \title{3}
 \date{}
@@ -18,8 +18,19 @@
 \maketitle
 We are assuming that $I$ and $J$ are of same dimensions. Also, we assume that in $I+J$ corresponding pixel values of each image gets added directly. There is no after-scaling to compensate when the intensities go out of range.
 
-Now, let $I$, $J$, $K$ be the random variables for these three images respectively. Now, 
+Let $I$, $J$, $K$ be the random variables for these three images respectively. Now, for each location
 \begin{equation}
-	\P_K(k) = \sum_{i=-\infty}^{\infty}\sum_{j=-\infty}^{\infty} \P_{IJ}(i,j)
+	\begin{aligned}
+		\P_K(k) &= \sum_{i=-\infty}^{\infty}\sum_{j=-\infty}^{\infty} \mathbbm{1}_{i+j=k} \cdot \P_{IJ}(i,j) &\\
+		\P_K(k) &= \sum_{i=-\infty}^{\infty} \P_{IJ}(i,k-i) &(\text{since } \mathbbm{1}_{i+j=k} = 0 \text{ for} j\neq k-i)
+	\end{aligned}
 \end{equation}
+Hence the PMF of image $I+J$ for each location is given by $\displaystyle\sum_{i=-\infty}^{\infty} \P_{IJ}(i,k-i)$. Now, we can see that there is a presence of $i$ and $k-i$ akin to a convolution. In fact, we can make this idea more robust if both the distributions $p_I(i)$ and $p_J(j)$ were independent. Then, 
+\begin{equation}
+	\begin{aligned}
+		\P_K(k) &= \sum_{i=-\infty}^{\infty} \P_{I}(i) \cdot \P_{J}(k-i) &\\
+		\P_K(k) &= p_I(i) \ast p_J(j) &(\text{definition of convolution})\\
+	\end{aligned}
+\end{equation}
+Hence the PMF of image $I+J$ for each location is given by $p_I(i) \ast p_J(j)$ when the distributions are independent. This is exaclty the convolution operation as studied in class.
 \end{document}
