@@ -42,10 +42,10 @@ Note that the order of scaling and shifting doesn't matter as $(m + t) \cdot s \
 Now to find $s_x, s_y, t_x, t_y$ from \ref{tab:poi}, we can rewrite the data as a matrix
 \begin{equation}
 	\begin{bmatrix}
-		 & & 1594 & 1\\
-		 & & 32 & 1\\
-		 411 & 1 & &\\
-		 730 & 1 & &
+		 0 & 0 & 1594 & 1\\
+		 0 & 0 & 32 & 1\\
+		 411 & 1 & 0 & 0\\
+		 730 & 1 & 0 & 0
 	\end{bmatrix}
 	\begin{bmatrix}
 		s_x\\t_x\\s_y\\t_y
@@ -153,32 +153,32 @@ The table, its rewritten form and equations are provided below (\ref{tab:poibett
 % \begin{comment}
 \begin{equation}
 	\begin{bmatrix}
-		 & & 32 & 1\\
-		 & & 124 & 1\\
-		 & & 188 & 1\\
-		 & & 264 & 1\\
-		 & & 364 & 1\\
-		 & & 434 & 1\\
-		 & & 511 & 1\\
-		 & & 589 & 1\\
-		 & & 668 & 1\\
-		 & & 743 & 1\\
-		 & & 821 & 1\\
-		 & & 899 & 1\\
-		 & & 977 & 1\\
-		 & & 1054 & 1\\
-		 & & 1132 & 1\\
-		 & & 1209 & 1\\
-		 & & 1286 & 1\\
-		 & & 1365 & 1\\
-		 & & 1441 & 1\\
-		 & & 1516 & 1\\
-		 & & 1594 & 1\\
-		 411 & 1 & &\\
-		 491 & 1 & &\\
-		 571 & 1 & &\\
-		 650 & 1 & &\\
-		 730 & 1 & &
+		 0 & 0 & 32 & 1\\
+		 0 & 0 & 124 & 1\\
+		 0 & 0 & 188 & 1\\
+		 0 & 0 & 264 & 1\\
+		 0 & 0 & 364 & 1\\
+		 0 & 0 & 434 & 1\\
+		 0 & 0 & 511 & 1\\
+		 0 & 0 & 589 & 1\\
+		 0 & 0 & 668 & 1\\
+		 0 & 0 & 743 & 1\\
+		 0 & 0 & 821 & 1\\
+		 0 & 0 & 899 & 1\\
+		 0 & 0 & 977 & 1\\
+		 0 & 0 & 1054 & 1\\
+		 0 & 0 & 1132 & 1\\
+		 0 & 0 & 1209 & 1\\
+		 0 & 0 & 1286 & 1\\
+		 0 & 0 & 1365 & 1\\
+		 0 & 0 & 1441 & 1\\
+		 0 & 0 & 1516 & 1\\
+		 0 & 0 & 1594 & 1\\
+		 411 & 1 & 0 & 0\\
+		 491 & 1 & 0 & 0\\
+		 571 & 1 & 0 & 0\\
+		 650 & 1 & 0 & 0\\
+		 730 & 1 & 0 & 0
 	\end{bmatrix}
 	\begin{bmatrix}
 		s_x\\t_x\\s_y\\t_y
@@ -189,7 +189,7 @@ The table, its rewritten form and equations are provided below (\ref{tab:poibett
 	\end{bmatrix}
 \end{equation}
 % \end{comment}
-Resultant equations considering the inconsistency with labels is given as follows:
+Resultant equations considering the inconsistency with labels is as follows: (similar equations)
 \begin{equation}{\label{eq:conversionbetter}}
 	\begin{aligned}
 		g_x &=  0.0627 \cdot m_x - 35.7966\\
