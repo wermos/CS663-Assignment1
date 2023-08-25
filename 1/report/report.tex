@@ -112,6 +112,20 @@ We have assumed that the mentioned document scanners are flatbed scanners and th
 	\end{align}
 	Once we have established the alignment, we can now laterally invert both the images to remove ink bleeding from the image of the other side. Again, as the document is same with no stretching or bending, modelling scaling/shearing is not required with this approach.
 
-	If a negative scaling factor is not supported by the alignment system then we will have to use the next best model which is the affine model shown to be sufficient.
+	If a negative scaling factor is not supported by the alignment system then we will have to use the next best model which is the affine model shown to be sufficient. The equation of motion model will be as follows:
+	\begin{equation}
+		\begin{bmatrix}
+			x_2\\y_2\\1
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			A_{11} & A_{12} & t_x\\
+			A_{21} & A_{22}  & t_y\\
+			0           & 0           & 1\\
+		\end{bmatrix}
+		\begin{bmatrix}
+			x_1-x_c\\y_1 - y_c\\1
+		\end{bmatrix}
+	\end{equation}
 \end{enumerate}
 \end{document}
