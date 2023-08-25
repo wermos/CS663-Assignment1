@@ -55,7 +55,32 @@ Now to find $s_x, s_y, t_x, t_y$ from \ref{tab:poi}, we can rewrite the data as 
 		640\\540\\-10\\10
 	\end{bmatrix}
 \end{equation}
-% From \ref{tab:poi}, it is clear that the point of intersection $(m,n)$ is $(143, 1520)$ in MATLAB's coordinate system. Also, $m$ and $n$ can be found by scaling
+Solving this gives 
+\begin{equation}
+	\begin{bmatrix}
+		s_x\\t_x\\s_y\\t_y
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		20/319\\-11410/319\\50/781\\420140/781
+	\end{bmatrix}
+\end{equation}
+Hence, the equations that convert MATLAB's coordinate system to the coordinate system of the graph is
+\begin{equation}
+	\begin{aligned}
+		g_x &=  20/319 \cdot m_x - 11410/319\\
+		g_y &=  50/781 \cdot m_y + 420140/781
+	\end{aligned}
+\end{equation}{\label{eq:conversion}}
+\begin{minted}[frame=single, breaklines]{matlab}
+A = sym([0 0 1594 1;0 0 32 1; 411 1 0 0; 730 1 0 0]);
+A\[640;540;-10;10]
+>> ans =
+     20/319
+ -11410/319
+     50/781
+ 420140/781
+\end{minted}
 \begin{comment}
 	>> A = sym([0 0 1594 1;0 0 32 1; 411 1 0 0; 730 1 0 0])
 	 
@@ -84,4 +109,100 @@ Now to find $s_x, s_y, t_x, t_y$ from \ref{tab:poi}, we can rewrite the data as 
 	     50/781
 	 420140/781
 \end{comment}
+Note that in the graph image, the labelling on the $y$-axis is inconsistent. For example, the label 565 is much closer to the label 560 than the label 555.
+Due to such inconsistencies, the conversion equation \ref{eq:conversion} will not be accurate.
+
+To account for this, we can use all the coordinates available to create an overdetermined system of equations and solve for the best fit, i.e., least squares.
+
+The table, its rewritten form and equations are provided below (\ref{tab:poibetter}, \ref{eq:conversionbetter})
+\begin{table}
+\centering
+\begin{tabular}{cc}
+	Graph $(x,y)$ coordinates & MATLAB $(x,y)$ coordinates\\\hline
+	$(m, 540)$ & $(143, 32)$\\
+	$(m, 545)$ & $(143, 124)$\\
+	$(m, 550)$ & $(143, 188)$\\
+	$(m, 555)$ & $(143, 264)$\\
+	$(m, 560)$ & $(143, 364)$\\
+	$(m, 565)$ & $(143, 434)$\\
+	$(m, 570)$ & $(143, 511)$\\
+	$(m, 575)$ & $(143, 589)$\\
+	$(m, 580)$ & $(143, 668)$\\
+	$(m, 585)$ & $(143, 743)$\\
+	$(m, 590)$ & $(143, 821)$\\
+	$(m, 595)$ & $(143, 899)$\\
+	$(m, 600)$ & $(143, 977)$\\
+	$(m, 605)$ & $(143, 1054)$\\
+	$(m, 610)$ & $(143, 1132)$\\
+	$(m, 615)$ & $(143, 1209)$\\
+	$(m, 620)$ & $(143, 1286)$\\
+	$(m, 625)$ & $(143, 1365)$\\
+	$(m, 630)$ & $(143, 1441)$\\
+	$(m, 635)$ & $(143, 1516)$\\
+	$(m, 640)$ & $(143, 1594)$\\
+	$(m, n)$ & $(143, 1520)$\\
+	$(-10, n)$ & $(411, 1520)$\\
+	$(-5, n)$ & $(491, 1520)$\\
+	$(0, n)$ & $(571, 1520)$\\
+	$(5, n)$ & $(650, 1520)$\\
+	$(10, n)$ & $(730, 1520)$
+\end{tabular}
+\caption{Comparison of graph and MATLAB coordinates for points of interest}
+\label{tab:poibetter}
+\end{table}
+% \begin{comment}
+\begin{equation}
+	\begin{bmatrix}
+		 & & 32 & 1\\
+		 & & 124 & 1\\
+		 & & 188 & 1\\
+		 & & 264 & 1\\
+		 & & 364 & 1\\
+		 & & 434 & 1\\
+		 & & 511 & 1\\
+		 & & 589 & 1\\
+		 & & 668 & 1\\
+		 & & 743 & 1\\
+		 & & 821 & 1\\
+		 & & 899 & 1\\
+		 & & 977 & 1\\
+		 & & 1054 & 1\\
+		 & & 1132 & 1\\
+		 & & 1209 & 1\\
+		 & & 1286 & 1\\
+		 & & 1365 & 1\\
+		 & & 1441 & 1\\
+		 & & 1516 & 1\\
+		 & & 1594 & 1\\
+		 411 & 1 & &\\
+		 491 & 1 & &\\
+		 571 & 1 & &\\
+		 650 & 1 & &\\
+		 730 & 1 & &
+	\end{bmatrix}
+	\begin{bmatrix}
+		s_x\\t_x\\s_y\\t_y
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		540\\545\\550\\555\\560\\565\\570\\575\\580\\585\\590\\595\\600\\605\\610\\615\\620\\625\\630\\635\\640\\-10\\-5\\0\\5\\10
+	\end{bmatrix}
+\end{equation}
+% \end{comment}
+Resultant equations considering the inconsistency with labels is given as follows:
+\begin{equation}{\label{eq:conversionbetter}}
+	\begin{aligned}
+		g_x &=  0.0627 \cdot m_x - 35.7966\\
+		g_y &=  0.0642 \cdot m_y + 537.3632
+	\end{aligned}
+\end{equation}{\label{eq:conversion}}
+\begin{minted}[frame=single, breaklines]{matlab}
+A = [0 0 32 1; 0 0 124 1; 0 0 188 1; 0 0 264 1; 0 0 364 1; 0 0 434 1; 0 0 511 1; 0 0 589 1; 0 0 668 1; 0 0 743 1; 0 0 821 1; 0 0 899 1; 0 0 977 1; 0 0 1054 1; 0 0 1132 1; 0 0 1209 1; 0 0 1286 1; 0 0 1365 1; 0 0 1441 1; 0 0 1516 1; 0 0 1594 1; 411 1 0 0; 491 1 0 0; 571 1 0 0; 650 1 0 0; 730 1 0 0]
+A\[540;545;550;555;560;565;570;575;580;585;590;595;600;605;610;615;620;625; 630;635;640;-10;-5;0;5;10]
+>> ans =
+    0.0627
+  -35.7966
+    0.0642
+  537.3632
+\end{minted}
 \end{document}
