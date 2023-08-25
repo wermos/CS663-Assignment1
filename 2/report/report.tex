@@ -4,6 +4,7 @@
 \usepackage[parfill]{parskip}
 \setlength{\parindent}{0em}
 \usepackage{enumitem}
+\usepackage{comment}
 \usepackage{amsmath, amssymb, amsfonts, amsthm, mathtools, nccmath}
 \usepackage{subcaption}
 \usepackage{minted}
@@ -30,5 +31,57 @@ Let's assume the vertical labelled line in graph is $x=m$ and the horizontal lab
 \caption{Comparison of graph and MATLAB coordinates for points of interest}
 \label{tab:poi}
 \end{table}
+Now, assume that we apply a scaling with the scaling factor $s_x$ and $s_y$ and then a shift with translation factor $t_x$ and $t_y$. If $(g_x, g_y)$ are the graph's coordinates and $(m_x, m_y)$ are MATLAB's coordinates then they can be converted as follows:
+\begin{equation}
+	\begin{aligned}
+		g_x &= m_x \cdot s_x + t_x\\
+		g_y &= m_y \cdot s_y + t_y
+	\end{aligned}
+\end{equation}
+Note that the order of scaling and shifting doesn't matter as $(m + t) \cdot s \equiv m \cdot s + \underbrace{t \cdot s}_{\tilde{t}}$. 
+Now to find $s_x, s_y, t_x, t_y$ from \ref{tab:poi}, we can rewrite the data as a matrix
+\begin{equation}
+	\begin{bmatrix}
+		 & & 1594 & 1\\
+		 & & 32 & 1\\
+		 411 & 1 & &\\
+		 730 & 1 & &
+	\end{bmatrix}
+	\begin{bmatrix}
+		s_x\\t_x\\s_y\\t_y
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		640\\540\\-10\\10
+	\end{bmatrix}
+\end{equation}
 % From \ref{tab:poi}, it is clear that the point of intersection $(m,n)$ is $(143, 1520)$ in MATLAB's coordinate system. Also, $m$ and $n$ can be found by scaling
+\begin{comment}
+	>> A = sym([0 0 1594 1;0 0 32 1; 411 1 0 0; 730 1 0 0])
+	 
+	A =
+	 
+	[   0, 0, 1594, 1]
+	[   0, 0,   32, 1]
+	[ 411, 1,    0, 0]
+	[ 730, 1,    0, 0]
+	 
+	>> B = inv(A)
+	 
+	B =
+	 
+	[       0,       0,  -1/319,    1/319]
+	[       0,       0, 730/319, -411/319]
+	[  1/1562, -1/1562,       0,        0]
+	[ -16/781, 797/781,       0,        0]
+	 
+	>> B*[640;540;-10;10]
+	 
+	ans =
+	 
+	     20/319
+	 -11410/319
+	     50/781
+	 420140/781
+\end{comment}
 \end{document}
