@@ -9,11 +9,17 @@
 \usepackage{subcaption}
 \usepackage{minted}
 \usepackage[colorlinks=true]{hyperref}
+\renewcommand{\P}{\textsf{P}}
 
 \title{3}
 \date{}
 
 \begin{document}
 \maketitle
+We are assuming that $I$ and $J$ are of same dimensions. Also, we assume that in $I+J$ corresponding pixel values of each image gets added directly. There is no after-scaling to compensate when the intensities go out of range.
 
+Now, let $I$, $J$, $K$ be the random variables for these three images respectively. Now, 
+\begin{equation}
+	\P_K(k) = \sum_{i=-\infty}^{\infty}\sum_{j=-\infty}^{\infty} \P_{IJ}(i,j)
+\end{equation}
 \end{document}
