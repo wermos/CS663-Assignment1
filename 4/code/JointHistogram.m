@@ -11,3 +11,7 @@ function array = JointHistogram(I1, I2)
         array(bin_x, bin_y) = array(bin_x, bin_y) + 1;
     end
 end
+
+function val = helper(input)
+    val = input * log2(input);
+end
