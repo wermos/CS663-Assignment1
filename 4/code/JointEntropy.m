@@ -15,4 +15,5 @@ function output = JointEntropy(I1, I2)
             end
         end
     end
+    output = output * -1;
 end
