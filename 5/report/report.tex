@@ -110,7 +110,7 @@ The Images are:
 \section{Part-e} % (fold)
 \label{sec:part_e}
 
-Let the matrices of formed by points of image 1 and image 2 be $M_1$ and $M_2$ respectively such as:
+Let the matrices formed by points of image 1 and image 2 be $M_1$ and $M_2$ respectively such as:
 \begin{equation}
 	M_i =
 	\begin{bmatrix}
@@ -119,9 +119,9 @@ Let the matrices of formed by points of image 1 and image 2 be $M_1$ and $M_2$ r
 		1 & 1 & \cdots & 1
 	\end{bmatrix}
 \end{equation}
-As the points of first image are collinear, the ratio $x_{1i}:y_{1i}$ is same for all $i$. Also, $x_{1i}$ or $y_{1i}$ can't be zero for any $i$ due to MATLAB's 1-based indexing, so the ratio can't be 0 or undetermined.
+As the points of first image are collinear, the ratio $(x_{1i}-t_x):(y_{1i}-t_y)$ is same for all $i$ and a some tranlation $t_x$ and $t_y$. Note, $x_{1i}$ or $y_{1i}$ can't be zero for any $i$ due to MATLAB's 1-based indexing. Also, $x_{1i}$ can be equal to $t_x$ at most once, as each $(x_{1i})$ uniquely define $(y_{1i})$ and together they make a unique point. Similarly, $y_{1i}$ can be equal to $ty$ at most once.
 
-Now, $\operatorname{rank}(M_1)\leq 2$. This is because the rank is equal to one only when all $x_{1i}$'s are equal to each other and all $y_{1i}$'s are equal to each other. But this means that all points are same. If any two or $x_{1i}$'s or $y_{1i}$'s are unequal then the first row and last row become linearly independent. Hence, for distinct points $\operatorname{rank}(M_1)=2$ 
+Now, $\operatorname{rank}(M_1)\leq 2$. Because all points are unique, any two $(x_{1i}-t_x)$'s or $(y_{1i}-t_y)$'s are unequal then the first row and last row become linearly independent. Hence, for distinct points $\operatorname{rank}(M_1)=2$ 
 
 
 We know that the affine model equation with control points is given by:
@@ -164,7 +164,4 @@ Since, $P$ is not full rank here, this system has infinite solutions for the mat
 
 Hence, if we take collinear points then $A$ is not unique and this might lead to problems while solving for $A$ with different approaches.
 % section part_e (end)
-
-
-
 \end{document}
