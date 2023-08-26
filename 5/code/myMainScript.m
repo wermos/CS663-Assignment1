@@ -3,7 +3,7 @@
 % tic;
 %% Your code here
 
-load('control_param.mat', 'x1', 'x2', 'y1', 'y2')
+
 
 img1 = imread("..\images\goi1.jpg");
 img2 = imread("..\images\goi2_downsampled.jpg");
@@ -16,16 +16,16 @@ number_of_control_points = 12;
 % y2 = zeros(1,number_of_control_points);
 % 
 % 
-% % input of control points
-% for i=1:number_of_control_points
-%     figure(1); 
-%     imshow(img1/255);
-%     [x1(i), y1(i)] = ginput(1);
-%     figure(2);
-%     imshow(img2/255);
-%     [x2(i), y2(i)] = ginput(1);
-% end
-% save('control_param.mat', 'x1', 'x2', 'y1', 'y2')
+% input of control points
+ for i=1:number_of_control_points
+    figure(1); 
+    imshow(img1/255);
+    [x1(i), y1(i)] = ginput(1);
+    figure(2);
+    imshow(img2/255);
+    [x2(i), y2(i)] = ginput(1);
+end
+
 
 % caluclate A matrix
 % create P1 and P2 matrix and calculate Transformation(A) matrix
@@ -34,12 +34,6 @@ P_1 = [x1;y1;temp];
 P_2 = [x2;y2;temp];
 
 A = P_2*pinv(P_1); % A converts P1(img1) to P2(img2)
-
-% A(2,3) = 0;
-% A(1,3) = 0;
-% % A = [1.04650777759100,  0.00420484987313417,    22.1284245689161;
-% % -0.0588679277839662,    0.99,   20.1924796652928;
-% % 0,  0,  1];
 
 [m,n] = size(img1);
 img3 = zeros(m,n); % transformed image
