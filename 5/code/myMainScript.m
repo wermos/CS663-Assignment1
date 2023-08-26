@@ -60,17 +60,6 @@ for i=1:m
     end
 end
 
-
-
-% %use inbuilt
-% P1 =[x1;y1]';
-% P2 =[x2;y2]';
-% 
-% A= fitgeotform2d(P_1,P_2,"similarity");
-% Rfixed = imref2d(size(img2));
-% 
-% img3 = imwarp(img1,A,OutputView=imref2d(size(img2)));
-
 C = imfuse(img2/255, img3/255);
 D = imfuse(img2/255, img4/255);
 figure(3);
