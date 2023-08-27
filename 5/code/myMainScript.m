@@ -41,12 +41,12 @@ img4 = zeros(m,n); % transformed image
 
 for i=1:m
     for j=1:n
-        arr = A\([i;j;1]);      % reverse wrapping
+        arr = A\([j;i;1]);      % reverse wrapping
 
         % use nearest neighbour
         [fx,fy] = nearest_neighbour(arr(1), arr(2)); % nearest neightbour
-        if(fx >= 1 && fx <=m && fy >=1 && fy <= n)
-            img3(i,j) = img1(fx,fy); % copy intensity values
+        if(fx >= 1 && fx <=n && fy >=1 && fy <= m)
+            img3(i,j) = img1(fy,fx); % copy intensity values
         end
 
         % use bilinear
