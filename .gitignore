@@ -2,4 +2,5 @@
 *.log
 *.out
 *.gz
+*.dvi
 2/report/_minted-report
