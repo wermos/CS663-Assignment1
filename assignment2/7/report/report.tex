@@ -1,8 +1,161 @@
 \documentclass[a4paper]{article}
 
+\usepackage[utf8]{inputenc}
 \usepackage{microtype}
-\usepackage{enumitem}
-\usepackage{mathtools, amssymb}
-\usepackage{bbm}
+\usepackage{mathtools, amssymb, amsthm}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=blue
+}
 
 \setlength{\parindent}{0em}
+
+\newcommand{\R}{\mathbb{R}}
+
+%————————————————Definitions for the \pd command—————————————————————
+
+%pd is short for ``partial derivative". The non-starred variant (which is meant to be used more often) takes two inputs: One for the function being differentiated, and the other is the variable we are differentiating with respect to.
+\makeatletter
+\newcommand{\pd}{\@ifstar{\@pdd}{\@pdn}}
+\newcommand{\@pdd}[1]{\dfrac{\partial}{\partial #1}}
+\newcommand{\@pdn}[2]{\dfrac{\partial #1}{\partial #2}}
+\makeatother
+%————————————————————————————————————————————————————————————————————
+
+%——————————————————Definitions for the \spd command——————————————————
+
+%spd is short for ``second partial derivative". The non-starred variant (which is meant to be used more often) takes two inputs: One for the function being differentiated, and the other is the variable we are differentiating with respect to.
+\makeatletter
+\newcommand{\spd}{\@ifstar{\@spdd}{\@spdn}}
+\newcommand{\@spdd}[1]{\dfrac{\partial^2}{\partial #1^2}}
+\newcommand{\@spdn}[2]{\dfrac{\partial^2 #1}{\partial #2^2}}
+\makeatother
+%————————————————————————————————————————————————————————————————————
+
+%——————————————————Definitions for the \mspd command——————————————————
+
+%spd is short for ``mixed second partial derivative". The non-starred variant (which is meant to be used more often) takes two inputs: One for the function being differentiated, and the other is the variable we are differentiating with respect to.
+\makeatletter
+\newcommand{\mspd}{\@ifstar{\@mspdd}{\@mspdn}}
+\newcommand{\@mspdd}[2]{\dfrac{\partial^2}{\partial #1 \partial #2}}
+\newcommand{\@mspdn}[3]{\dfrac{\partial^2 #1}{\partial #2 \partial #3}}
+\makeatother
+%————————————————————————————————————————————————————————————————————
+
+\title{7}
+\date{}
+
+\begin{document}
+\maketitle
+
+Let $\Omega$ be an open set in $\R^n$ for some $n$, and let $f\colon \Omega \to \R$ be a function such that $f\in C^2(\Omega)$ (i.e., $f$ is twice-continuously differentiable).
+
+\medskip
+Let
+\begin{align*}
+u &= x\cos\theta - y\sin\theta \\
+v &= x\sin\theta + y\cos\theta
+\end{align*}
+be a rotation of the coordinate system by $\theta$.
+
+\medskip
+To show that the Laplacian is rotationally invariant, it suffices to show that $f_{xx} + f_{yy}$ is equal to $f_{uu} + f_{vv}$ for any arbitrary $f$.
+
+\smallskip
+We know that
+\begin{equation*}
+\pd{f}{x} = \pd{f}{u}\pd{u}{x} + \pd{f}{v}\pd{v}{x}
+\end{equation*}
+
+Substituting the expressions for $\pd{u}{x}$ and $\pd{v}{x}$, we get
+\begin{equation*}
+\pd{f}{x} = \pd{f}{u}\cos\theta + \pd{f}{v}\sin\theta
+\end{equation*}
+
+We need to differentiate the above expression w.r.t. $x$ once more to get $\spd{f}{x}$:
+\begin{align*}
+\spd{f}{x} &= \pd*{x} \left (\pd{f}{x} \right ) \\
+&= \pd*{x} \left ( \pd{f}{u} \cos\theta + \pd{f}{v} \sin\theta \right ) \\
+&= (\cos\theta) \underbrace{\pd*{x}\left ( \pd{f}{u} \right )}_{T_1} + (\sin\theta) \underbrace{\pd*{x}\left ( \pd{f}{v} \right )}_{T_2}
+\end{align*}
+
+Now, we will calculate $T_1$ and $T_2$ separately:
+\begin{align*}
+T_1 = \pd*{x}\left ( \pd{f}{u} \right )
+&= \pd*{u}\left ( \pd{f}{u} \right ) \pd{u}{x} + \pd*{v} \left ( \pd{f}{u} \right ) \pd{v}{x} \\
+&= \spd{f}{u} \pd{u}{x} + \mspd{f}{v}{u} \pd{v}{x} \\
+&= \spd{f}{u} \cos\theta + \mspd{f}{v}{u} \sin\theta
+\end{align*}
+
+\begin{align*}
+T_2 = \pd*{x}\left ( \pd{f}{v} \right )
+&= \pd*{u}\left ( \pd{f}{v} \right ) \pd{u}{x} + \pd*{v} \left ( \pd{f}{v} \right ) \pd{v}{x} \\
+&= \mspd{f}{u}{v} \pd{u}{x} + \spd{f}{v} \pd{v}{x} \\
+&= \mspd{f}{u}{v} \cos\theta + \spd{f}{v} \sin\theta
+\end{align*}
+
+Putting it all together, we get
+\begin{equation*}
+\spd{f}{x} = (\cos\theta) \left ( \spd{f}{u} \cos\theta + \mspd{f}{v}{u} \sin\theta \right ) + (\sin\theta) \left ( \mspd{f}{u}{v} \cos\theta + \spd{f}{v} \sin\theta \right )
+\end{equation*}
+
+Since our hypothesis is that $f$ is a $C^2$ function, we can use \href{https://en.wikipedia.org/wiki/Symmetry_of_second_derivatives#Schwarz's_theorem}{Schwarz's theorem} to simplify the above expression further:
+\begin{equation}
+\spd{f}{x} = \spd{f}{u} \cos^2\theta + 2\mspd{f}{u}{v} \sin\theta \cos\theta + \spd{f}{v} \sin^2\theta
+\label{eq1}
+\end{equation}
+
+Now, we will perform the same steps to compute $\spd{f}{y}$, starting with the expression for $\pd{f}{y}$:
+\begin{equation*}
+\pd{f}{y} = \pd{f}{u}\pd{u}{y} + \pd{f}{v}\pd{v}{y} = -\pd{f}{u}\sin\theta + \pd{f}{v}\cos\theta
+\end{equation*}
+
+From this, we get
+\begin{align*}
+\spd{f}{y} &= \pd*{y} \left (\pd{f}{y} \right ) \\
+&= \pd*{y} \left ( -\pd{f}{u}\sin\theta + \pd{f}{v}\cos\theta \right) \\
+&= (-\sin\theta) \underbrace{\pd*{y}\left ( \pd{f}{u} \right )}_{T_3} + (\cos\theta) \underbrace{\pd*{y}\left ( \pd{f}{v} \right )}_{T_4}
+\end{align*}
+
+Now, we will calculate $T_3$ and $T_4$ separately:
+\begin{align*}
+T_3 = \pd*{y}\left ( \pd{f}{u} \right )
+&= \pd*{u}\left ( \pd{f}{u} \right ) \pd{u}{y} + \pd*{v} \left ( \pd{f}{u} \right ) \pd{v}{y} \\
+&= \spd{f}{u} \pd{u}{y} + \mspd{f}{v}{u} \pd{v}{y} \\
+&= -\spd{f}{u} \sin\theta + \mspd{f}{v}{u} \cos\theta
+\end{align*}
+
+\begin{align*}
+T_4 = \pd*{y}\left ( \pd{f}{v} \right )
+&= \pd*{u}\left ( \pd{f}{v} \right ) \pd{u}{y} + \pd*{v} \left ( \pd{f}{v} \right ) \pd{v}{y} \\
+&= \mspd{f}{u}{v} \pd{u}{y} + \spd{f}{v} \pd{v}{y} \\
+&= -\mspd{f}{u}{v} \sin\theta + \spd{f}{v} \cos\theta
+\end{align*}
+
+Hence,
+\begin{equation*}
+\spd{f}{y} = -\sin\theta \left ( -\spd{f}{u} \sin\theta + \mspd{f}{v}{u} \cos\theta \right ) + \cos\theta \left ( -\mspd{f}{u}{v} \sin\theta + \spd{f}{v} \cos\theta \right )
+\end{equation*}
+
+By using Schwarz's Theorem again, we can simplify the above expression to
+\begin{equation}
+\spd{f}{y} = \spd{f}{u} \sin^2\theta -2\mspd{f}{u}{v} \sin\theta\cos\theta + \spd{f}{v} \cos^2\theta
+\label{eq2}
+\end{equation}
+
+By adding \eqref{eq1} and \eqref{eq2}, we get
+\begin{align*}
+\spd{f}{x} + \spd{f}{y} &= \left ( \spd{f}{u} \cos^2\theta + 2\mspd{f}{u}{v} \sin\theta \cos\theta + \spd{f}{v} \sin^2\theta \right ) \\
+&\phantom{{}={}} + \left ( \spd{f}{u} \sin^2\theta -2\mspd{f}{u}{v} \sin\theta\cos\theta + \spd{f}{v} \cos^2\theta \right ) \\
+&= \spd{f}{u} \left ( \cos^2\theta + \sin^2\theta \right ) + \spd{f}{v} \left ( \sin^2\theta + \cos^2\theta \right ) \\
+&= \spd{f}{u} + \spd{f}{v} \hfill \qed
+\end{align*}
+
+
+
+
+\end{document}
