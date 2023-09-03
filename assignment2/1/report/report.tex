@@ -1,6 +1,6 @@
 \documentclass[a4paper,landscape]{article}
 
-\usepackage[DIV=15]{typearea}
+\usepackage[DIV=18]{typearea}
 \usepackage{microtype}
 \usepackage{enumitem}
 \usepackage{mathtools, amssymb}
@@ -88,7 +88,7 @@ This  $M$ is a $(n+6)\times (n+12)$ matrix. Moreover, we can remove first and la
         w(5)&w(4)&w(3)&w(2)&w(1)&w(0)&0&\Cdots&&&0\\
         w(6)&w(5)&w(4)&w(3)&w(2)&w(1)&w(0)&0&\Cdots&&0\\
         0&w(6)&w(5)&w(4)&w(3)&w(2)&w(1)&w(0)&0&\Cdots&0\\
-        \vdots&\vdots&\vdots&\vdots&\vdots&\vdots\\
+        \vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots\\
         0&\Cdots&0&w(6)&w(5)&w(4)&w(3)&w(2)&w(1)&w(0)&0\\
         0&\Cdots&&0&w(6)&w(5)&w(4)&w(3)&w(2)&w(1)&w(0)\\
         0&\Cdots&&&0&w(6)&w(5)&w(4)&w(3)&w(2)&w(1)\\
@@ -105,7 +105,7 @@ This  $M$ is a $(n+6)\times (n+12)$ matrix. Moreover, we can remove first and la
         \vdots\\
         f(n-1)\\
     \end{bmatrix}
-    }_{f}
+}_{f}
 \end{equation}
 But, this pattern requires an additional condition that $n\geq 6$, and the matrix for $n<6$ case will be slightly different. Instead of making seperate cases, we can make size of $f$ greater than six by padding it with three zeroes in both  directions. Let this new vector be  \[f_s=[\underbrace{f(-3); f(-2); f(-1)}_{0\text{'s}}; \underbrace{f(0); \ldots; f(n-1)}_{f}; \underbrace{f(n);  f(n+1); f(n+2)}_{0\text{'s}}]\]
 
@@ -158,6 +158,12 @@ This gives us a square matrix $M_s$ as follows given below
     \end{bmatrix}
     }_{f_s}
 \end{equation}
+\section{Properties}
+\begin{itemize}
+    \item $M_s$ is a sparse matrix as each row can potentially contain atmost six non-zero entries among its $(n+6)$ elements.
+    \item All diagonal entries are $w(3)$.
+    \item From the fourth row till the last fourth row, each next row is a right rotation of the previous row.
+\end{itemize}
 \section{Application}
 Usually by doing convolution we lose some infomation of our input. But  with  this matrix representation we can calculate when do we lose the information and when the information is recoverable using the invertability of $M_s$. If $M_s$ is invertible, we can recover back $f_s$ from $r_s$ as follows else we can't recover $f_s$
 \[f_s=M_s^{-1}r_s\]
