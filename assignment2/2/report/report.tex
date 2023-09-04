@@ -9,7 +9,7 @@
 \hypersetup{linktoc=all}
 \usepackage{parskip}
 \setcounter{MaxMatrixCols}{20}
-\title{1}
+\title{2}
 \date{}
 
 \begin{document}
@@ -92,11 +92,11 @@ Since, there are 16 variables in \ref{eq:g}, {atleast 16 equations} are needed a
 
 Now, we will show that it can be done in 16 points with a suitable assumption.
 
-For this, we have to assume that the \textbf{16 nearest neighbors} as mentioned in the question form a grid. Though this sounds trivial, the 16 nearest neighbors don't actually form in our usual notion of euclidean distance. By symmetry, the candidate $4\times4$ grid that contains the 16 nearest neighbors must have the given point (shown in red) inside or on the $1\times1$ grid at the center. Figure \ref{fig:nearest} shows this as if a point is not in the center $1\times1$ part of the grid (unshaded), there exists a grid (shaded) that include some points that are `nearer' to the given point but not in the grid (unshaded). 
+For this, we have to assume that the \textbf{16 nearest neighbors} as mentioned in the question form a grid. Though this sounds trivial, the 16 nearest neighbors don't actually form a grid in our usual notion of euclidean distance. By symmetry, the candidate $4\times4$ grid that contains the 16 nearest neighbors must have the given point (shown in red) inside or on the $1\times1$ grid at the center. Figure \ref{fig:nearest} shows this as if a point is not in the center $1\times1$ part of the grid (unshaded), there exists a grid (shaded) that include some points that are `nearer' to the given point but not in the grid (unshaded). 
 
 Figure \ref{fig:nearest} also shows the other side of the problem, that even the best grid does not contain all the 16 nearest neighbours. As, even if we pick this suitable grid (shaded) following the above rule there are still some omitted lattice points in unshaded region that are actually `closer' than some lattice points in the shaded region.
 
-But this problem can be easily solved by changing our distance metric to $\max-$norm. Now, the candidate grid we discussed always contains the 16 nearest neighbours as any lattice point in the grid is at atmost 2 units from the given point and any lattice point on outside is atleast 2 units from the given point. The equality happening when the given point is on the boundary of the $1\times1$ center grid.
+But this problem can be easily solved by changing our distance metric to $\max-$norm. Now, the candidate grid we discussed always contains the 16 nearest neighbours as any lattice point in the grid is at atmost 2 units from the given point and any lattice point on outside is atleast 2 units from the given point. The equality occuring when the given point is on the boundary of the $1\times1$ center grid.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{nearest_point.pdf}
@@ -156,7 +156,7 @@ where $V_x, V_y$ are the Vandermonde matrices which are invertible for distinct 
 \begin{equation}
     A = V_x^{-1}\cdot V \cdot (V_y^{T})^{-1}
 \end{equation}
-We initially showed that atleast 16 neighbours are required and now we have shown that they are sufficient to calculate the coefficients uniquely.
+We initially showed that atleast 16 neighbours are necessary and now we have shown that they are sufficient to calculate the coefficients uniquely.
 %$(x,y), (x,y+1), (x,y+2), (x, y+3), (x+1,y), (x+1,y+1), (x+1,y+2), (x+1, y+3), (x+2,y), (x+2,y+1), (x+2,y+2), (x+2, y+3), (x+3,y), (x+3,y+1), (x+3,y+2), (x+3, y+3)$
 % Let us consider a neighbourhood containing 16 pixels arranged in a $4\times 4$ grid. Now, for these pixels their $x-$coordinate $\in\{p,p+1,p+2,p+3\}$ and $y-$coordinate $\in\{q,q+1,q+2,q+3\}$
 % Let us consider that the given point in somewhere 
