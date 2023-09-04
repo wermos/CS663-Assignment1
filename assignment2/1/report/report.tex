@@ -164,7 +164,10 @@ This gives us a square matrix $M_s$ as follows given below
     \item All diagonal entries are $w(3)$.
     \item From the fourth row till the last fourth row, each next row is a right rotation of the previous row.
 \end{itemize}
-\section{Application}
-Usually by doing convolution we lose some infomation of our input. But  with  this matrix representation we can calculate when do we lose the information and when the information is recoverable using the invertability of $M_s$. If $M_s$ is invertible, we can recover back $f_s$ from $r_s$ as follows else we can't recover $f_s$
+\section{Applications}
+\begin{itemize}
+    \item Using a sparse matrix data structure we can store the matrix efficiently and compute the convolution result faster.
+    \item Usually by doing convolution we lose some infomation of our input. But  with  this matrix representation we can calculate when do we lose the information and when the information is recoverable using the invertability of $M_s$. If $M_s$ is invertible, we can recover back $f_s$ from $r_s$ as follows else we can't recover $f_s$
 \[f_s=M_s^{-1}r_s\]
+\end{itemize}
 \end{document}
