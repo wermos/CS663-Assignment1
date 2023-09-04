@@ -17,7 +17,7 @@
 \ref{fig:bo}, \ref{fig:ko} show the original and the noisy images that are to be fed to  the bilateral filter.
 
 As $\sigma$ increases, the noise in both images increases. 
-Since, the resolution of the Kodak image is much higher than the Barbara image. The effect of noise on the details is lesser.
+Since, the resolution of the Kodak image is much higher than the Barbara image, the effect of noise on the details is lesser.
 \begin{figure}
     \centering
     \begin{subfigure}{0.33\linewidth}
@@ -61,7 +61,7 @@ Since, the resolution of the Kodak image is much higher than the Barbara image. 
 \section{Bilateral filter on original images}
 \ref{fig:bs}, \ref{fig:ks} show the results of bilateral filter applied on the original Barbara and Kodak image.
 
-As we go from left to right (increasing $\sigma_s, \sigma_r$), for both images, the image looks smoother but the textures get lost as evident by focussing at the net in the background of the Barbara image, the text on house in the Kodak image and the multi-layered window in  the Kodak image. Also, some weird artifacts on the edges become more prominent like at the edges of facial features of Barbara.
+As we go from left to right (increasing $\sigma_s, \sigma_r$), for both images, the image looks smoother but the textures get lost as is evident by focusing on the net in the background of the Barbara image, the text on the house in the Kodak image and the multi-layered window in the Kodak image. Also, some weird artifacts on the edges became more prominent like at the edges of facial features of Barbara.
 \begin{figure}
     \centering
     \begin{subfigure}{0.33\linewidth}
@@ -105,11 +105,11 @@ As we go from left to right (increasing $\sigma_s, \sigma_r$), for both images, 
 \section{Bilateral filter on noisy images}
 \ref{fig:bn}, \ref{fig:kn} show the results of bilateral filter applied on the noisy Barbara and Kodak image.
 
-Bilateral filter of the biggest size $(\sigma_s=3, \sigma_r=15)$ does a good job in noise removal from both the images currupted by both kind of gaussian noise. 
+Bilateral filter of the biggest size $(\sigma_s=3, \sigma_r=15)$ does a good job in noise removal from both the images corrupted by both kind of Gaussian noise. 
 
 Since, the resolution of the Kodak image is much higher than the Barbara image. The effect of noise on the details is lesser, hence its output doesn't look as bad as the output of Barbara image. 
 
-As we go from left to right (increasing $\sigma_s, \sigma_r$), for both images, the image looks smoother but the textures get lost as evident by focussing at the net in the background of the Barbara image, the text on house in the Kodak image and the multi-layered window in  the Kodak image. Also, some weird artifacts on the edges become more prominent like at the edges of facial features of Barbara.
+As we go from left to right (increasing $\sigma_s, \sigma_r$), for both images, the image looks smoother but the textures get lost as evident by focusing at the net in the background of the Barbara image, the text on house in the Kodak image and the multi-layered window in  the Kodak image. Also, some weird artifacts on the edges become more prominent like at the edges of facial features of Barbara.
 \begin{figure}
     \centering
     \begin{subfigure}{0.33\linewidth}
@@ -182,6 +182,6 @@ As we go from left to right (increasing $\sigma_s, \sigma_r$), for both images, 
 \end{figure}
 % \section{Bilateral filter creation}
 
-{\it Note the size of the filter is such that it includes the points atmost ${\lceil3\sigma_s\rceil}$ away from the center point.
+{\it Note the size of the filter is such that it includes the points at most ${\lceil3\sigma_s\rceil}$ away from the center point.
 }
 \end{document}
