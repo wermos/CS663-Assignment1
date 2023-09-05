@@ -5,10 +5,13 @@
 \usepackage{float}
 \usepackage{mathtools, amssymb}
 \usepackage{bbm}
-\usepackage[colorlinks=true]{hyperref}
-\hypersetup{linktoc=all}
 \usepackage{parskip}
+\usepackage[colorlinks=true]{hyperref}
+
+\hypersetup{linktoc=all}
+
 \setcounter{MaxMatrixCols}{20}
+
 \title{2}
 \date{}
 
@@ -19,7 +22,7 @@ The image intensity is given in the below form
 \begin{equation}{\label{eq:bcip}}
 		v(x,y)= \sum_{i=0}^{3}\sum_{j=0}^{3} a_{ij}x^i y^j
 \end{equation}
-Let the 16 nearest points be $(x_i, y_i)$ where $i\in\{1,2,\ldots,16\}$ and their corresponding intensities are given by $v(x_i, y_i)$.
+Let the 16 nearest points be $(x_i, y_i)$ where $i\in\{1,2,\dots,16\}$ and their corresponding intensities are given by $v(x_i, y_i)$.
 Currently all $a_{ij}$ are unknown, but we can solve them by combining \ref{eq:bcip} for all these 16 points using matrix representation as shown below 
 \begin{equation}
     \underbrace{
@@ -83,9 +86,9 @@ Currently all $a_{ij}$ are unknown, but we can solve them by combining \ref{eq:b
     \end{bmatrix}
     }_{a}\label{eq:g}
 \end{equation}
-Now, the analysis of invertibility of this matrix seems non-trivial. As mentioned in SIAM by \href{https://evoq-n.org/Portals/0/Publications/SIURO/Vol1_Issue1/A_Simple_Expression_for_Multivariate.pdf}{Kamron}, any arbitrary multivariate polynomial of $m$ variables and degree $n$ may need upto $\binom{n+m}{n}$ distinct points and their evaluations to uniquely interpolate the coefficients. Since $\binom{6+2}{2}=28$ and $28>16$, this theorem will not help us and we will need to utilise the some special structure of this bicubic expression to prove that this matrix $M$ is invertible for distinct points if that is the case. Anyway, if $M$ is invertible then the coefficients can be calculated as follow
+Now, the analysis of invertibility of this matrix seems non-trivial. As mentioned in SIAM by \href{https://evoq-n.org/Portals/0/Publications/SIURO/Vol1_Issue1/A_Simple_Expression_for_Multivariate.pdf}{Kamron}, any arbitrary multivariate polynomial of $m$ variables and degree $n$ may need upto $\binom{n+m}{n}$ distinct points and their evaluations to uniquely interpolate the coefficients. Since $\binom{6+2}{2}=28$ and $28>16$, this theorem will not help us and we will need to utilise some special structure of this bicubic expression to prove that this matrix $M$ is invertible for distinct points if that is the case. Anyway, if $M$ is invertible then the coefficients can be calculated as follow
 \begin{equation}
-    a = M^{-1}\cdot v
+    a = M^{-1} v
 \end{equation}
 \section{Assumption}
 Since, there are 16 variables in \ref{eq:g}, {atleast 16 equations} are needed according to linear algebra. Hence, \textbf{atleast 16 points} are needed to get these coefficients.
@@ -96,7 +99,7 @@ For this, we have to assume that the \textbf{16 nearest neighbors} as mentioned 
 
 Figure \ref{fig:nearest} also shows the other side of the problem, that even the best grid does not contain all the 16 nearest neighbours. As, even if we pick this suitable grid (shaded) following the above rule there are still some omitted lattice points in unshaded region that are actually `closer' than some lattice points in the shaded region.
 
-But this problem can be easily solved by changing our distance metric to $\max-$norm. Now, the candidate grid we discussed always contains the 16 nearest neighbours as any lattice point in the grid is at atmost 2 units from the given point and any lattice point on outside is atleast 2 units from the given point. The equality occuring when the given point is on the boundary of the $1\times1$ center grid.
+But this problem can be easily solved by changing our distance metric to $\max-$norm. Now, the candidate grid we discussed always contains the 16 nearest neighbours as any lattice point in the grid is at at most 2 units from the given point and any lattice point on outside is at least 2 units from the given point. The equality occurring when the given point is on the boundary of the $1\times1$ center grid.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{nearest_point.pdf}
@@ -104,7 +107,7 @@ But this problem can be easily solved by changing our distance metric to $\max-$
     \label{fig:nearest}
 \end{figure}
 \section{Solution}
-Now, we can the points as $(p,q)$ where $p\in\{x,x+1,x+2,x+3\}$ and $q\in\{y,y+1,y+2,y+3\}$. With this formulation the given point $(x_0,y_0)$ is such that $x+1\leq x_0\leq x+2$ and $y+1\leq y_0\leq y+2$. Now, \ref{eq:bcip} can also be written as
+Now, we can the points as $(p,q)$ where $p\in\{x,x+1,x+2,x+3\}$ and $q\in\{y,y+1,y+2,y+3\}$. With this formulation, the given point $(x_0,y_0)$ is such that $x+1\leq x_0\leq x+2$ and $y+1\leq y_0\leq y+2$. Now, \ref{eq:bcip} can also be written as
 \begin{equation}
     v(x,y)=\begin{bmatrix}
         1 & x & x^2 & x^3
@@ -154,7 +157,7 @@ Hence, these can be easily combined for the grid coordinates as follows:
 \end{equation}
 where $V_x, V_y$ are the Vandermonde matrices which are invertible for distinct values and as the inverse of a square matrix is unique the determined coefficients are unique. 
 \begin{equation}
-    A = V_x^{-1}\cdot V \cdot (V_y^{T})^{-1}
+    A = V_x^{-1} V (V_y^{T})^{-1}
 \end{equation}
 We initially showed that atleast 16 neighbours are necessary and now we have shown that they are sufficient to calculate the coefficients uniquely.
 %$(x,y), (x,y+1), (x,y+2), (x, y+3), (x+1,y), (x+1,y+1), (x+1,y+2), (x+1, y+3), (x+2,y), (x+2,y+1), (x+2,y+2), (x+2, y+3), (x+3,y), (x+3,y+1), (x+3,y+2), (x+3, y+3)$
