@@ -1,8 +1,54 @@
 \documentclass[a4paper]{article}
 
+\usepackage[utf8]{inputenc}
 \usepackage{microtype}
 \usepackage{enumitem}
+\usepackage{comment}
+\usepackage{float, graphicx}
 \usepackage{mathtools, amssymb}
-\usepackage{bbm}
+\usepackage{caption}
+\usepackage{subcaption}
 
 \setlength{\parindent}{0em}
+
+
+\title{5}
+\date{}
+
+\begin{document}
+\maketitle
+
+Let I denote the image and M denote the mean filter. Applying the mean is equivalent to a convolution between image I and filter M. 
+
+\begin{equation}
+    f_1 = I * M 
+\end{equation}
+
+Now, we apply the filter again, leading to another convolution
+
+\begin{align}
+     f_2 & = (I*M)*M \\
+         & = I*(M*M) \\
+\end{align}
+Hence $f_k$ is given by
+
+\begin{equation}
+    f_k = I*(M*M*...k-times)
+\end{equation}
+
+If k is large enough, we can apply the Central Limit Theorem which states that if you have a bunch of distributions $f_i$ and you convolve them all together into a distribution $F:= f_1*f_@*f_3*..f_k$, then the larger k is, the more F will resemble a Gaussian distribution. Hence the above equation is equivalent to convolving the the initial distribution with a Gaussian.
+
+\begin{equation}
+    f_k = I*\mathcal{G}
+\end{equation}
+
+Also, it can be noted that if the above process is repeated multiple times, it would be equivalent to taking a convolution of the image with a Gaussian multiple times. Which is equivalent to taking a convolution with a Gaussian of a larger $\sigma$. Hence the resultant image will ultimately lead to having the same average intensity at each pixel.
+    
+
+
+
+
+
+
+\end{document}
+

@@ -1,8 +1,55 @@
 \documentclass[a4paper]{article}
 
+\usepackage[utf8]{inputenc}
 \usepackage{microtype}
 \usepackage{enumitem}
+\usepackage{comment}
+\usepackage{float, graphicx}
 \usepackage{mathtools, amssymb}
-\usepackage{bbm}
+\usepackage{caption}
+\usepackage{subcaption}
 
 \setlength{\parindent}{0em}
+
+
+\title{3}
+\date{}
+
+\begin{document}
+\maketitle
+
+
+
+
+Let I be the original image with a given pdf distribution $P_I(i)$.
+The addition of Gaussian noise can be treated as the addition of an image J to I where the pdf of J is a Gaussian.
+Let the resultant image be K with pdf $P_K(k)$. We have:
+
+\begin{equation}
+    P_K(k) = \int_{-\infty}^{\infty} P_{I,J}(i,k-i)di
+\end{equation}
+
+Which is nothing but the convolution of I and J
+
+Since it is mentioned that the additive noise is applied independently, we can assume that the pdf of I and J are independent. Thus,
+
+\begin{equation}
+    P_K(k) = \int_{-\infty}^{\infty} P_{I}(i)P_{J}(k-i)di   
+\end{equation}
+
+The form for the pdf of J is,
+\begin{equation}
+P_J(j) = \frac{e^{\frac{-j^2}{2\sigma^2}}}{\sqrt{2\pi\sigma^2}}  
+\end{equation}
+
+Hence, the expression for the pdf of the Final image is,
+
+\begin{equation}
+    P_K(k) = \int_{-\infty}^{\infty} P_{I}(i) \frac{e^{\frac{-(k-i)^2}{2\sigma^2}}}{\sqrt{2\pi\sigma^2}} di   
+\end{equation}
+
+
+
+
+\end{document}
+
