@@ -4,9 +4,11 @@
 \usepackage{microtype}
 \usepackage{enumitem}
 \usepackage{comment}
+\usepackage{physics}
 \usepackage{float, graphicx}
 \usepackage{mathtools, amssymb}
 \usepackage{caption}
+\usepackage{amsmath}
 \usepackage{subcaption}
 \usepackage{enumitem}
 \setlength{\parindent}{0em}
@@ -38,10 +40,20 @@ $
     
 \end{bmatrix}
 $
-,clearly has rank 2. Hence it is not separable.
+, clearly has rank 2. Hence it is not separable.
 
-\item Since the Matrix is not separable, it cannot be written as an outer product of 2,1-D vectors and hence it can not be implemented using 1-D convolution.
+\item Since the Matrix is not separable, it cannot be written as an outer product of 2,1-D vectors. Hence you cannot separate this kernel and 2 consecutive  1-D convolutions to get the same result. However, the given Laplacian operator is written as,
 
+\begin{align*}
+    \nabla^2 f &= \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2}\\
+    &= f(x+1,y) + f(x-1,y) \\
+    &\quad+ f(x,y+1) + f(x,y-1) - 4f(x,y)
+\end{align*}
+
+Hence, we can make two $2^{nd}$ order derivatives using 1D convolution with kernels
+$ \begin{psmallmatrix*}[c]1&-2&1 \end{psmallmatrix*} $
+and
+$ \begin{psmallmatrix*}[c]1\\-2\\1 \end{psmallmatrix*} $ and sum their results  to apply the Laplacian masks.
+Thus, the Laplacian mask can be implemented entirely using 1D convolutions.
 \end{enumerate}
 \end{document}
-
