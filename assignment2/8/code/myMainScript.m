@@ -13,7 +13,6 @@ function [] = process(image_name, sigma_spatial_range, sigma_noise)
     % Apply bilateral on original image
     for sigma = sigma_spatial_range
         image_output = mybilateralfilter(image, sigma);
-        image_output = image_double_to_int(image_output);
         filename = "../images/" + image_name + ",σ_spatial" + string(sigma(1)) + ",σ_range" + string(sigma(2)) + ".png";
         save_image(image_output, filename);
     end
@@ -26,7 +25,6 @@ function [] = process(image_name, sigma_spatial_range, sigma_noise)
         save_image(image_with_gaussian_noise, filename);
         for sigma = sigma_spatial_range
             image_output = mybilateralfilter(image_with_gaussian_noise, sigma);
-            image_output = image_double_to_int(image_output);
             filename = "../images/" + image_name + ",σ_noise" + string(noise) + ",σ_spatial" + string(sigma(1)) + ",σ_range" + string(sigma(2)) + ".png";
             save_image(image_output, filename);
         end
