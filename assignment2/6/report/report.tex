@@ -27,23 +27,24 @@ In the above expression for $J(x)$, we observe that $\mathcal{I}_1$ is 0 because
 \begin{align}
 J(x) &= \int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! (cx + d)g(y)\, \mathrm{d}y \nonumber \\
 &=  (cx + d)\int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\!g(y)\, \mathrm{d}y \label{eq1} \\
-&= cx + d \label{eq2}\\
-&= I(x)
+&= cx + d \label{eq2} \\
+&= I(x) \nonumber
 \end{align}
 where \eqref{eq1} follows because $c$ and $d$ are constants in $\R$, and $x$ is constant w.r.t. $y$, and \eqref{eq2} follows because the integral of a PDF over the entire space is equal to 1.
 
 \item Note that the general definition of a bilateral filter (as can be found \href{https://en.wikipedia.org/wiki/Bilateral_filter#Definition}{here}, for example) does not require the intensity smoothing filter and the distance smoothing filter to be Gaussian filters. For this question, we assume that both filters are Gaussian filters, in accordance to what was taught in class and what was shown in the slides.
 
-Let the bilateral Gaussian filter with parameters $\sigma_s$ and $\sigma_r$, be denoted by $B_\ell(x)$ and defined as follows:
-\begin{equation}
-    B_\ell(x) = \frac{b(y)}{W} 
-\end{equation}
+Let the bilateral Gaussian filter with parameters $\sigma_s$ and $\sigma_r$, be denoted by $B_\ell(y)$ and defined as follows:
+\begin{equation*}
+B_\ell(y) = \frac{b(y)}{W} 
+\end{equation*}
+
 Where we define $b(y)$ and $W$ as
 \begin{align}
-b(y) &\coloneqq \left ( \dfrac{\exp\left (\frac{-y^2}{2\sigma_s^2}\right )}{\sqrt{2\pi}\sigma_s} \right ) \left ( \dfrac{\exp\left (\frac{-(I(x - y) - I(x))^2}{2\sigma_r^2}\right )}{\sqrt{2\pi}\sigma_r} \right )\\
-W &\coloneqq \int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! b(y)\, \mathrm{d}y
-\label{eq3}
+b(y) &\coloneqq \left ( \dfrac{\exp\left (\frac{-y^2}{2\sigma_s^2}\right )}{\sqrt{2\pi}\sigma_s} \right ) \left ( \dfrac{\exp\left (\frac{-(I(x - y) - I(x))^2}{2\sigma_r^2}\right )}{\sqrt{2\pi}\sigma_r} \right ) \label{eq3} \\
+W &\coloneqq \int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! b(y)\, \mathrm{d}y \label{eq7}
 \end{align}
+
 Similar to the previous question, in order to find an expression for $J(x)$, we will convolve $B_\ell$ with $I$ to get the new image. We get
 \begin{align}
 J(x) &= (B_\ell * I)(x) \nonumber \\
@@ -51,6 +52,7 @@ J(x) &= (B_\ell * I)(x) \nonumber \\
 &= \dfrac{1}{W}\int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! b(y)\left ( c(x - y) + d\right )\, \mathrm{d}y
 \label{eq6}
 \end{align}
+
 Upon expanding the integral in \eqref{eq6}, we get
 \begin{align}
 J(x) &= \dfrac{1}{W}\int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! (cx - cy + d) b(y)\, \mathrm{d}y \nonumber \\
@@ -60,7 +62,7 @@ J(x) &= \dfrac{1}{W}\int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! (cx -
 
 Observe that since $I$ is a ramp image, $I(x - y) - I(x)$ simplifies to $-cy$, so \eqref{eq3} simplifies to
 \begin{equation}
-b(y) = \left ( \dfrac{\exp\left (\frac{-y^2}{2\sigma_s^2}\right )}{\sqrt{2\pi}\sigma_s} \right ) \left ( \dfrac{\exp\left (\frac{-cy^2}{2\sigma_r^2}\right )}{\sqrt{2\pi}\sigma_r} \right )
+b(y) = \left ( \dfrac{\exp\left (\frac{-y^2}{2\sigma_s^2}\right )}{\sqrt{2\pi}\sigma_s} \right ) \left ( \dfrac{\exp\left (\frac{-cy^2}{2\sigma_r^2}\right )}{\sqrt{2\pi}\sigma_r} \right ) = \dfrac{\exp\left (\frac{-y^2}{2\sigma_s^2}\right ) \exp\left (\frac{-cy^2}{2\sigma_r^2}\right )}{2\pi\sigma_s \sigma_r}
 \label{eq4}
 \end{equation}
 
@@ -69,10 +71,11 @@ The key thing to note is that \eqref{eq4} is an even function, meaning that $y b
 J(x) &= \dfrac{1}{W}\int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! (cx + d) b(y)\, \mathrm{d}y \\
 &= \dfrac{1}{W}\int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! I(x) b(y)\, \mathrm{d}y \\
 &= I(x) \left (\dfrac{1}{W}\cdot \int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! b(y)\, \mathrm{d}y \right ) \\
-&= I(x) \left (\dfrac{\int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! b(y)\, \mathrm{d}y}{W}\right ) \\
 &= I(x)
 \end{align*}
-where the last equality is due to the definition of $W$. \qed
+where the last equality is due to the definition of $W$ (see \eqref{eq7}). \qed
+
+We note that, in general, the above result about 1D ramp images will hold for any intensity smoothing filter $S_\mathcal{I}$ and any distance smoothing filter $S_d$, as long as both $S_\mathcal{I}$ and $S_d$ are even functions.
 \end{enumerate}
-Hence, in both cases we get back the same image after applying the filter.
+Hence, in both cases, we get back the same image after applying the filter.
 \end{document}
