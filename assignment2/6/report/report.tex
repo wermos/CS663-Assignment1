@@ -3,6 +3,28 @@
 \usepackage{microtype}
 \usepackage{enumitem}
 \usepackage{mathtools, amssymb}
-\usepackage{bbm}
 
 \setlength{\parindent}{0em}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+\begin{enumerate}
+\item For this part, we have to derive an expression for $I(x)$ (where $I$ is a 1D ramp image) after filtering it by a zero-mean Gaussian filter with standard deviation $\sigma$. In other words, we convolve $g$ with $I$, where $g$ is the PDF associated with $N(0, \sigma^2)$ (the zero-mean Gaussian distribution). So, we get
+\begin{align*}
+J(x) &= (g * I)(x) \\
+&= \int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! g(y) I (x - y)\, \mathrm{d}y \\
+&= \int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! g(y)\left ( c(x - y) + d\right )\, \mathrm{d}y \\
+&= \underbrace{-\int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! c y g(y)\, \mathrm{d}y}_{\mathcal{I}_1} + \int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! (cx + d)g(y)\, \mathrm{d}y
+\end{align*}
+
+In the above expression for $J(x)$, we observe that $\mathcal{I}_1$ is 0 because the integrand is an odd function. Therefore, upon simplifying, we get
+\begin{align}
+J(x) &= \int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! (cx + d)g(y)\, \mathrm{d}y \nonumber \\
+&=  (cx + d)\int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\!g(y)\, \mathrm{d}y \label{eq1} \\
+&= cx + d \label{eq2}
+\end{align}
+where \eqref{eq1} follows because $c$ and $d$ are constants in $\R$, and $x$ is constant w.r.t. $y$, and \eqref{eq2} follows because the integral of a PDF over the entire space is equal to 1.
+
+\end{enumerate}
+\end{document}
