@@ -8,7 +8,7 @@
 \usepackage{mathtools, amssymb}
 \usepackage{caption}
 \usepackage{subcaption}
-
+\usepackage{enumitem}
 \setlength{\parindent}{0em}
 
 
@@ -24,10 +24,11 @@ Given a 2D operator defined by a matrix $G \in R^{n\times n}$, using SVD decompo
 \begin{equation}
     G = \sum_{i = 1}^{n} \sigma_{i}u_{i}v_{i}^T
 \end{equation}
-Clearly, G is separable iff $\forall i > 1, \sigma_i = 0$
+Clearly, G is separable iff $\forall i > 1, \sigma_i = 0$.
 Hence the number of non-zero singular values should be equal to 1. Since that is equal to the rank of the matrix, the rank of the matrix should be 1.
 
-a.)Given Matrix,
+\begin{enumerate}[label=(\alph*)]
+    \item Given Matrix,
 $
 \begin{bmatrix}
 
@@ -39,10 +40,8 @@ $
 $
 ,clearly has rank 2. Hence it is not separable.
 
-b.) Since the Matrix is not separable, it cannot be written as an outer product of 2,1-D vectors and hence it can not be implemented using 1-D convolution.
+\item Since the Matrix is not separable, it cannot be written as an outer product of 2,1-D vectors and hence it can not be implemented using 1-D convolution.
 
-
-
-
+\end{enumerate}
 \end{document}
 
