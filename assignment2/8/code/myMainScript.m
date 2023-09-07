@@ -33,12 +33,12 @@ end
 function image_with_gaussian_noise = gaussian_noise_adder(image_input, mean, sigma)
     image_with_gaussian_noise = image_input + normrnd(mean, sigma, size(image_input));
 end
-function image_integer = image_double_to_int(image_double)
+function image_integer = image_double_to_integer(image_double)
     image_double(image_double < 0) = 0;
     image_double(image_double > 255)= 255;
     image_integer = uint8(image_double);
 end
 function [] = save_image(image, filename)
-    image = image_double_to_int(image);
+    image = image_double_to_integer(image);
     imwrite(image, filename)
 end
