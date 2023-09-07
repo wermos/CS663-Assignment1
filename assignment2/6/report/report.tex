@@ -1,12 +1,17 @@
 \documentclass[a4paper]{article}
 
 \usepackage{microtype}
-\usepackage{enumitem}
 \usepackage{mathtools, amssymb}
+\usepackage{hyperref}
 
-\setlength{\parindent}{0em}
+\hypersetup{
+    colorlinks=true,
+    urlcolor=blue
+}
 
 \newcommand{\R}{\mathbb{R}}
+
+\setlength{\parindent}{0em}
 
 \begin{document}
 \begin{enumerate}
@@ -25,6 +30,21 @@ J(x) &= \int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! (cx + d)g(y)\, \m
 &= cx + d \label{eq2}
 \end{align}
 where \eqref{eq1} follows because $c$ and $d$ are constants in $\R$, and $x$ is constant w.r.t. $y$, and \eqref{eq2} follows because the integral of a PDF over the entire space is equal to 1.
+
+\item Note that the general definition of a bilateral filter (as can be found \href{https://en.wikipedia.org/wiki/Bilateral_filter#Definition}{here}, for example) does not require the intensity smoothing filter and the distance smoothing filter to be Gaussian filters. For this question, we assume that both filters are Gaussian filters, in accordance to what was taught in class and what was shown in the slides.
+
+Let the PDF corresponding to the bilateral filter with parameters $\sigma_s$ and $\sigma_r$, be denoted by $b(x)$. Similar to the previous question, in order to find an expression for $J(x)$, we will convolve $b$ with $I$. We get
+\begin{align*}
+J(x) &= (b * I)(x) \\
+&= \int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! b(y) I (x - y)\, \mathrm{d}y \\
+&= \int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! b(y)\left ( c(x - y) + d\right )\, \mathrm{d}y
+\end{align*}
+
+Upon expanding $b(y)$, we get
+\begin{align*}
+J(x) &= \int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}\! (cx - cy + d) \left ( \dfrac{\exp\left (\frac{-y^2}{2\sigma_s^2}\right )}{\sqrt{2\pi}\sigma_s} \right ) \left ( \dfrac{\exp\left (\frac{-\left (I(x - y) - I(x)\right )^2}{2\sigma_r^2}\right )}{\sqrt{2\pi}\sigma_r} \right )\dfrac{1}{x} \, \mathrm{d}y
+\end{align*}
+
 
 \end{enumerate}
 \end{document}
