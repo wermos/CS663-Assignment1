@@ -52,13 +52,3 @@ enhanced_LC2 = AdaptiveHistogramEqualization(chonky_LC2, chonky_block_size);
 
 imwrite(uint8(enhanced_LC1), "chonky_enhanced_LC1.png");
 imwrite(uint8(enhanced_LC2), "chonky_enhanced_LC2.png");
-
-mega_chonky_block_size = 101;
-mega_chonky_LC1 = padarray(LC1, [50 50], "symmetric", "both");
-mega_chonky_LC2 = padarray(LC2, [50 50], "symmetric", "both");
-
-enhanced_LC1 = AdaptiveHistogramEqualization(mega_chonky_LC1, mega_chonky_block_size);
-enhanced_LC2 = AdaptiveHistogramEqualization(mega_chonky_LC2, mega_chonky_block_size);
-
-imwrite(uint8(enhanced_LC1), "mega_chonky_enhanced_LC1.png");
-imwrite(uint8(enhanced_LC2), "mega_chonky_enhanced_LC2.png");
