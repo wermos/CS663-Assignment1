@@ -1,5 +1,5 @@
-LC1 = imread("LC1.png");
-LC2 = imread("LC2.jpg");
+LC1 = imread("../images/LC1.png");
+LC2 = imread("../images/LC2.jpg");
 
 global_eq_LC1 = histeq(LC1, 256);
 global_eq_LC2 = histeq(LC2, 256);
@@ -52,3 +52,13 @@ enhanced_LC2 = AdaptiveHistogramEqualization(chonky_LC2, chonky_block_size);
 
 imwrite(uint8(enhanced_LC1), "chonky_enhanced_LC1.png");
 imwrite(uint8(enhanced_LC2), "chonky_enhanced_LC2.png");
+
+mega_chonky_block_size = 101;
+mega_chonky_LC1 = padarray(LC1, [50 50], "symmetric", "both");
+mega_chonky_LC2 = padarray(LC2, [50 50], "symmetric", "both");
+
+enhanced_LC1 = AdaptiveHistogramEqualization(mega_chonky_LC1, mega_chonky_block_size);
+enhanced_LC2 = AdaptiveHistogramEqualization(mega_chonky_LC2, mega_chonky_block_size);
+
+imwrite(uint8(enhanced_LC1), "mega_chonky_enhanced_LC1.png");
+imwrite(uint8(enhanced_LC2), "mega_chonky_enhanced_LC2.png");
