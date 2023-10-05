@@ -1,16 +1,59 @@
-\documentclass[a4paper,landscape]{article}
+\documentclass[a4paper]{article}
 
-\usepackage[DIV=18]{typearea}
+\usepackage[utf8]{inputenc}
 \usepackage{microtype}
 \usepackage{enumitem}
-\usepackage{mathtools, amssymb}
-\usepackage{bbm}
-\usepackage{nicematrix}
-\setcounter{MaxMatrixCols}{20}
+\usepackage{comment}
+\usepackage{float, graphicx}
+\usepackage{mathtools, amssymb, mathrsfs}
+\usepackage{caption}
+\usepackage{subcaption}
+
 \setlength{\parindent}{0em}
+
+
 \title{3}
 \date{}
 
 \begin{document}
 \maketitle
+
+
+
+
+Let us assume that we have 2 discrete signals $f(x,y)$ and $g(x,y)$. The size of both is $W_1 \times W_2$. If the sizes of both signals are not the same, we can employ zero-padding to make them of the same size.
+
+The 2D discrete convolution is defined as:
+\[f \ast g(u,v) = \sum_{x = 0}^{W_1 -1} \sum_{y = 0}^{W_2 - 1}f(x,y)g(u-x,v-y)\]
+
+The 2D Fourier Transform of a discrete signal is given by:
+\[\mathscr{F}(f)(u,v) = \sum_{x = 0}^{W_1 -1} \sum_{y = 0}^{W_2 - 1}f(x,y)e^{-2 \pi j(\frac{ux}{W_1} + \frac{vy}{W_2})}\]
+
+Hence,
+\[\mathscr{F}(f\ast g)(u,v) = \sum_{x = 0}^{W_1 -1} \sum_{y = 0}^{W_2 - 1}\sum_{x' = 0}^{W_1 -1} \sum_{y' = 0}^{W_2 - 1}f(x',y')g(x-x',y-y')e^{-2 \pi j(\frac{ux}{W_1} + \frac{vy}{W_2})}\]
+
+We can rearrange the summations to obtain the following:
+\[\mathscr{F}(f\ast g)(u,v) = \sum_{x' = 0}^{W_1 -1} \sum_{y' = 0}^{W_2 - 1}f(x',y')\sum_{x = 0}^{W_1 -1} \sum_{y = 0}^{W_2 - 1}g(x-x',y-y')e^{-2 \pi j(\frac{ux}{W_1} + \frac{vy}{W_2})}\]
+
+We note that,
+\[\sum_{x = 0}^{W_1 -1} \sum_{y = 0}^{W_2 - 1}g(x-x',y-y')e^{-2 \pi j(\frac{ux}{W_1} + \frac{vy}{W_2})} = \mathscr{F}(g(m-x',n-y'))(u,v)\] 
+Also, using the translation property of Fourier transform, we can write:
+\[\mathscr{F}(g(m-x',n-y'))(u,v) = \mathscr{F}(g)(u,v)e^{-2 \pi j(\frac{ux'}{W_1} + \frac{vy'}{W_2})} \] 
+
+Hence we can rewrite the original equation as:
+\[\mathscr{F}(f\ast g)(u,v) = \sum_{x' = 0}^{W_1 -1} \sum_{y' = 0}^{W_2 - 1}f(x',y') \mathscr{F}(g)(u,v)e^{-2 \pi j(\frac{ux'}{W_1} + \frac{vy'}{W_2})}\]
+
+Rearranging:
+\[\mathscr{F}(f\ast g)(u,v) =  \mathscr{F}(g)(u,v)\sum_{x' = 0}^{W_1 -1} \sum_{y' = 0}^{W_2 - 1}f(x',y')e^{-2 \pi j(\frac{ux'}{W_1} + \frac{vy'}{W_2})}\]
+
+Also,
+
+\[\sum_{x' = 0}^{W_1 -1} \sum_{y' = 0}^{W_2 - 1}f(x',y')e^{-2 \pi j(\frac{ux'}{W_1} + \frac{vy'}{W_2})} = \mathscr{F}(f)(u,v)\]
+
+Hence,
+\[\mathscr{F}(f\ast g)(u,v) =  \mathscr{F}(g)(u,v)\mathscr{F}(f)(u,v)\]
+
+which is the convolution theorem for 2D Discrete Fourier transforms.
+
 \end{document}
+
