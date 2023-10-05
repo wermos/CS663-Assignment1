@@ -1,16 +1,54 @@
-\documentclass[a4paper,landscape]{article}
+\documentclass[a4paper]{article}
 
-\usepackage[DIV=18]{typearea}
 \usepackage{microtype}
 \usepackage{enumitem}
-\usepackage{mathtools, amssymb}
+\usepackage{mathtools, amssymb, amsthm}
 \usepackage{bbm}
 \usepackage{nicematrix}
-\setcounter{MaxMatrixCols}{20}
+
 \setlength{\parindent}{0em}
+
 \title{6}
 \date{}
 
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\R}{\mathbb{R}}
+
+\newcommand{\infint}{\int\limits_{\mathclap{-\infty}}^{\mathclap{\infty}}}\renewcommand{\d}{\mathrm{d}}
+
 \begin{document}
 \maketitle
+
+Recall that, given a continuous function $f\colon \R \to \R$, the Fourier Transform of $f$ is given by
+\begin{equation*}
+\hat{f}(\xi) \coloneq \F\{f(t)\} = \infint \! f(t) e^{-i2\pi \xi t} \, \d t,
+\end{equation*}
+and the inverse Fourier Transform is given by
+\begin{equation*}
+f(x) = \infint \! \hat{f}(\xi) e^{i2\pi \xi t} \, \d \xi,
+\end{equation*}
+
+Throughout this answer, we will denote the Fourier Transform operator by $\F$.
+
+\bigskip
+
+As the hint suggests, we will first investigate what we get when we simplify $\F\{\F\{f(t)\}\}$. Since $\hat{f}(\xi) = \F\{f(t)\}$, we know that $\F\{\F\{f(t)\}\} = \F\{\hat{f}(\xi)\}$. Expanding the expression, we get 
+\begin{equation*}
+\F\{\hat{f}(\xi)\} = \infint \hat{f}(\xi) e^{-i2\pi \xi t} \d \xi
+\end{equation*}
+
+By performing a change of variable with $u = -\xi$ (so that $\d u = -\d \xi$), we get
+\begin{align*}
+\infint \hat{f}(\xi) e^{-i2\pi \xi t} \d \xi &= -\int\limits_{\mathclap{\infty}}^{\mathclap{-\infty}} \hat{f}(-u) e^{i2\pi u t} \d u \\
+&= \infint \hat{f}(-u) e^{i2\pi u t} \d u
+\end{align*}
+
+The last expression is, by definition, the inverse Fourier Transform of $f(-u)$. Hence, we have shown (sans some variable renaming) that
+\begin{equation*}
+\F\{\F\{f(t)\}\} = f(-t)
+\end{equation*}
+
+With this lemma in mind, we can easily prove the given proposition. Given $\F\{\F\{\F\{\F\{f(t)\}\}\}\}$, we can simplify it to $\F\{\F\{f(-t)\}\}$ by using the previous lemma. By applying the same lemma again, we get$\F\{\F\{f(-t)\}\} = f\big(-(-t)\big) = f(t)$, which proves the proposition. \qed
+
+
 \end{document}
