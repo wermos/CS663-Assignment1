@@ -61,11 +61,16 @@ Observe that we normalized the image intensities, so the range of intensity valu
 \medskip
 
 Since most of the image consists of 0-intensity pixels, Equation \eqref{eq:dft} simplifies to
-\begin{align}
+\begin{align*}
 F_d(u, v) &= \dfrac{1}{201} \sum\limits_{x = 0}^{200} f(x, 100) \exp\left (\dfrac{-2\pi i(ux + 100v)}{201}\right ) \nonumber \\
 &= \dfrac{1}{201} \sum\limits_{x = 0}^{200} \exp\left (\dfrac{-2\pi i(ux + 100v)}{201}\right ) \qed
-\label{eq:final}
-\end{align}
+\end{align*}
 
 (Note that $x$ here corresponds to the $x$-axis and $y$ here corresponds to the $y$-axis.)
+
+\subsection{Intuition}
+
+Intuitively, we can explain why we get the image we do in Figure \ref{eq:dft}. The 2D DFT is equivalent to first doing a DFT of each column, and then doing the DFT over the rows.
+
+Each column is essentially a delta function, so its Fourier Transform is a constant matrix. Then, once we compute the row-wise Fourier Transform of that again, we get a delta function once again on each row.
 \end{document}
