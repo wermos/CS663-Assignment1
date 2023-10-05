@@ -2,7 +2,7 @@
 
 \usepackage{microtype}
 \usepackage{enumitem}
-\usepackage{mathtools, amssymb}
+\usepackage{mathtools, amssymb, amsthm}
 \usepackage{subcaption}
 \usepackage{graphicx}
 \usepackage{bbm}
@@ -16,6 +16,8 @@
 
 \begin{document}
 \maketitle
+
+\subsection{MATLAB Plot}
 
 Below, we can see the original image that was described in the question:
 \begin{figure}[h]
@@ -59,10 +61,11 @@ Observe that we normalized the image intensities, so the range of intensity valu
 \medskip
 
 Since most of the image consists of 0-intensity pixels, Equation \eqref{eq:dft} simplifies to
-\begin{align*}
-F_d(u, v) &= \dfrac{1}{201} \sum\limits_{x = 0}^{200} f(x, 100) \exp\left (\dfrac{-2\pi i(ux + 100v)}{201}\right ) \\
-&= \dfrac{1}{201} \sum\limits_{x = 0}^{200} \exp\left (\dfrac{-2\pi i(ux + 100v)}{201}\right )
-\end{align*}
+\begin{align}
+F_d(u, v) &= \dfrac{1}{201} \sum\limits_{x = 0}^{200} f(x, 100) \exp\left (\dfrac{-2\pi i(ux + 100v)}{201}\right ) \nonumber \\
+&= \dfrac{1}{201} \sum\limits_{x = 0}^{200} \exp\left (\dfrac{-2\pi i(ux + 100v)}{201}\right ) \qed
+\label{eq:final}
+\end{align}
 
-
+(Note that $x$ here corresponds to the $x$-axis and $y$ here corresponds to the $y$-axis.)
 \end{document}
