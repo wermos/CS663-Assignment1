@@ -3,7 +3,7 @@ original_image = imread('../images/barbara256.png');
 
 figure;
 subplot(1, 3, 1);
-imshow(original_image/255);
+imshow(original_image);
 title('Original Image');
 
 %  Compute the 2D Fourier Transform of the image
@@ -64,11 +64,11 @@ fourier_gaussian = fourier_gaussian(floor(size(gaussian_filter,1)/2) +1: end - f
 
 % Display the filtered images
 subplot(1, 3, 2);
-imshow(abs(filtered_image_ideal)/255, []);
+imshow(abs(filtered_image_ideal), []);
 title('Ideal Low-Pass ');
 
 subplot(1, 3, 3);
-imshow(abs(filtered_image_gaussian)/255, []);
+imshow(abs(filtered_image_gaussian), []);
 title('Gaussian Low-Pass ');
 
 
