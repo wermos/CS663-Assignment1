@@ -4,6 +4,7 @@ sigma_spatial_range = [sigma_spatial; sigma_range];
 sigma_noise = [5 10];
 epsilon = 1e-1;
 
+
 process("barbara256", sigma_spatial_range, sigma_noise, epsilon);
 process("kodak24", sigma_spatial_range, sigma_noise, epsilon);
 
@@ -43,6 +44,5 @@ function image_integer = image_double_to_int(image_double)
 end
 function [] = save_image(image, filename)
     image = image_double_to_int(image);
-    imwrite(image, filename)
-    1
+    imwrite(image, filename);
 end
