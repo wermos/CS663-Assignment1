@@ -1,5 +1,5 @@
 % : Read and display the original image
-original_image = imread('../images/ori.png');
+original_image = imread('../images/barbara256.png');
 
 figure;
 subplot(1, 3, 1);
