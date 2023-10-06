@@ -15,7 +15,6 @@ function [] = process(image_name, sigma_spatial_range, sigma_noise, epsilon)
 
         
         image_output = meanshiftfilter(image, sigma, epsilon);
-        image_output = image_double_to_int(image_output);
         filename = "../images/" + image_name + ",σ_spatial" + string(sigma(1)) + ",σ_range" + string(sigma(2)) + ".png";
         save_image(image_output, filename);
     end
@@ -35,6 +34,7 @@ function [] = process(image_name, sigma_spatial_range, sigma_noise, epsilon)
     % end 
 end
 function image_with_gaussian_noise = gaussian_noise_adder(image_input, mean, sigma)
+    rng(0)
     image_with_gaussian_noise = image_input + normrnd(mean, sigma, size(image_input));
 end
 function image_integer = image_double_to_int(image_double)
