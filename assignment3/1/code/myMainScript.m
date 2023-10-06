@@ -2,7 +2,7 @@ sigma_spatial = [2 0.1 3];
 sigma_range = [2 0.1 15];
 sigma_spatial_range = [sigma_spatial; sigma_range];
 sigma_noise = [5 10];
-epsilon = 1e-1;
+epsilon = 1e-2;
 
 
 process("barbara256", sigma_spatial_range, sigma_noise, epsilon);
