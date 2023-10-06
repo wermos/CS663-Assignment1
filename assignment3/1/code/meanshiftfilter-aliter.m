@@ -25,7 +25,7 @@ function image_output = meanshiftfilter(image_input, sigma, epsilon)
                 mean_shift = norm(v_next-v);
                 v = v_next;
                 c = c + 1;
-                if (mean_shift < epsilon || c > 1e2)
+                if (mean_shift < epsilon || c > 1e3)
                     image_output(i,j) = v(3);
                     break;
                 end
