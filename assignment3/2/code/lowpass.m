@@ -1,6 +1,6 @@
 % : Read and display the original image
 original_image = imread('../images/ori.png');
-original_image = double(original_image);
+
 figure;
 subplot(1, 3, 1);
 imshow(original_image/255);
