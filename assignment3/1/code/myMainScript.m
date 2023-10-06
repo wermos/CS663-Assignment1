@@ -4,7 +4,6 @@ sigma_spatial_range = [sigma_spatial; sigma_range];
 sigma_noise = [5 10];
 epsilon = 1e-2;
 
-
 process("barbara256", sigma_spatial_range, sigma_noise, epsilon);
 process("kodak24", sigma_spatial_range, sigma_noise, epsilon);
 
@@ -15,7 +14,6 @@ function [] = process(image_name, sigma_spatial_range, sigma_noise, epsilon)
     % Apply mean shift filter on original image
     for sigma = sigma_spatial_range
         image_output = meanshiftfilter(image, sigma, epsilon);
-        image_output = image_double_to_int(image_output);
         filename = "../images/" + image_name + ",σ_spatial" + string(sigma(1)) + ",σ_range" + string(sigma(2)) + ".png";
         save_image(image_output, filename);
     end
@@ -28,7 +26,6 @@ function [] = process(image_name, sigma_spatial_range, sigma_noise, epsilon)
         save_image(image_with_gaussian_noise, filename);
         for sigma = sigma_spatial_range
             image_output = meanshiftfilter(image_with_gaussian_noise, sigma, epsilon);
-            image_output = image_double_to_int(image_output);
             filename = "../images/" + image_name + ",σ_noise" + string(noise) + ",σ_spatial" + string(sigma(1)) + ",σ_range" + string(sigma(2)) + ".png";
             save_image(image_output, filename);
         end
