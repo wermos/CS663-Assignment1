@@ -2,13 +2,8 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage{microtype}
-\usepackage{enumitem}
-\usepackage{comment}
-\usepackage{float, graphicx}
 \usepackage{amsmath}
 \usepackage{mathtools, amssymb, mathrsfs}
-\usepackage{caption}
-\usepackage{subcaption}
 
 \setlength{\parindent}{0em}
 
@@ -21,7 +16,9 @@
 
 
 \section{3a}
-The goal is to maximize $f^{T}Cf$ constrained to the condition that $f \perp e$ and $\lvert f \rvert = 1$
+The goal is to maximize $f^{T}Cf$ constrained to the condition that $f \perp e$ and $\lvert f \rvert = 1$.
+
+\medskip
 
 The Lagrangian for this optimization problem can be written as:
 \[\mathscr{L} = f^{T}Cf + \alpha_{2}(1 - \lvert f \rvert) + \beta(0 - f^{T}e)\]
@@ -32,20 +29,21 @@ Differentiating the above equation w.r.t $f$, we get:
  2Cf - 2\alpha_{2}(f)  -\beta(e) = 0 \label{eq:1}
 \end{equation}
 
-Left multiplying the equation by $e^{T}$:
+Left-multiplying the equation by $e^{T}$:
 \[2e^{T}Cf - 2\alpha_{2}e^{T}f - \beta e^{T}e = 0\]
 
-Since e is an eigenvector of C (say, with eigenvalue $\alpha_{1}$), we have:
+Since $e$ is an eigenvector of $C$ (say, with eigenvalue $\alpha_{1}$), we have:
 \[ Ce = \alpha_{1}e\]
 or, transposing both sides:
 \[e^{T}C = \alpha_{1}e^{T}\]
-Hence we obtain:
+Hence, we obtain:
 \[2\alpha_{1}e^{T}f - 2\alpha_{2}e^{T}f - \beta e^{T}e = 0\]
-Clearly,$f \perp e \implies  e^{T}f = 0$ and $e^{T}e = 1$, hence:
+Clearly, $f \perp e \implies  e^{T}f = 0$ and $e^{T}e = 1$, hence:
 \[\beta = 0\]
 Equation $\eqref{eq:1}$ reduces to:
 \[Cf = \alpha_{2}f\]
-Hence, we conclude that $f$ is an eigenvector of $C$. In order to maximize $f^{T}Cf$ we need to maximize $\alpha_2$. Because $f$ must be orthogonal to $e$, it cannot be the eigenvector corresponding to the largest eigenvalue($\alpha_{2} \neq \alpha_{1}$). As such, $f$ must be an eigenvector corresponding to the second-largest eigenvalue.
+Hence, we conclude that $f$ is an eigenvector of $C$. In order to maximize $f^{T}Cf$ we need to maximize $\alpha_2$. Because $f$ must be orthogonal to $e$, it cannot be the eigenvector corresponding to the largest eigenvalue ($\alpha_{2} \neq \alpha_{1}$). As such, $f$ must be an eigenvector corresponding to the second-largest eigenvalue.
+
 \section{3b}
 Let us now consider the expression $g^{T}Cg$ where $g$ is a vector perpendicular to both $f$ and $e$. The Lagrangian for this optimization problem can be written as:
 \[\mathscr{L} = g^{T}Cg + \alpha_{3}(1 - \lvert g \rvert) + \beta(0 - g^{T}e) + \gamma(0 - g^{T}f )\]
@@ -55,12 +53,12 @@ Differentiating the above equation w.r.t $g$, we get:
  2Cg - 2\alpha_{3}(g)  -\beta(e) - \gamma(f) = 0 \label{eq:2}
 \end{equation}
 
-Left multiplying the equation by $e^{T}$:
+Left-multiplying the equation by $e^{T}$:
 \[2e^{T}Cg - 2\alpha_{3}e^{T}g - \beta e^{T}e - \gamma e^{T}f = 0\]
 As seen before, $e^{T}Cg = \alpha_{1}e^{T}g = 0$. Also, $e^{T}g = 0$ and $e^{T}f = 0$. Hence:
 \[\beta = 0\]
 
-Similarly, we can left multiply  $\eqref{eq:2}$ by $f^{T}$ to obtain:
+Similarly, we can left-multiply  $\eqref{eq:2}$ by $f^{T}$ to obtain:
 \[2f^{T}Cg - 2\alpha_{3}f^{T}g - \beta f^{T}e - \gamma f^{T}f = 0\]
 Again, $f^{T}Cg = \alpha_{2}f^{T}g = 0$. Also, $f^{T}g = 0$ and $f^{T}e = 0$. Hence:
 \[\gamma = 0\]
@@ -68,7 +66,9 @@ Thus, $\eqref{eq:2}$ reduces to:
 \[Cg = \alpha_{3}g\]
 Hence, we conclude that $g$ is an eigenvector of $C$. In order to maximize $g^{T}Cg$ we need to maximize $\alpha_3$. Because $g$ must be orthogonal to $e$ and $f$, it cannot be the eigenvector corresponding to the largest eigenvalue($\alpha_{3} \neq \alpha_{1}$) or the second-largest eigenvalue($\alpha_{3} \neq \alpha_{2}$). As such, $f$ must be an eigenvector corresponding to the third-largest eigenvalue.
 
-He can proceed inductively to prove the result for the $j^{th}$ orthogonal vector.
+\medskip
+
+We can proceed inductively to prove the result for the $j^{th}$ orthogonal vector.
 
 \end{document}
 
