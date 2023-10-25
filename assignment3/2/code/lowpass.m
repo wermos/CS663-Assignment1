@@ -64,36 +64,43 @@ fourier_gaussian = fourier_gaussian(floor(size(gaussian_filter,1)/2) +1: end - f
 
 % Display the filtered images
 subplot(1, 3, 2);
-imshow(abs(filtered_image_ideal), []);
-title('Ideal Low-Pass ');
+ideal_abs = abs(filtered_image_ideal);
+imshow(ideal_abs, [min(ideal_abs(:)) max(ideal_abs(:))]);
+title('Ideal Low-Pass');
 
 subplot(1, 3, 3);
-imshow(abs(filtered_image_gaussian), []);
-title('Gaussian Low-Pass ');
+gaussian_abs = abs(filtered_image_gaussian);
+imshow(gaussian_abs, [min(gaussian_abs(:)) max(gaussian_abs(:))]);
+title('Gaussian Low-Pass');
 
 
 % Display the log absolute Fourier transforms of the original and filtered images
 figure;
 subplot(1, 3, 1);
-imshow(log(abs(fft_image_shifted) + 1), []);
+shifted_abs = log(abs(fft_image_shifted) + 1);
+imshow(shifted_abs, [min(shifted_abs(:)) max(shifted_abs(:))]);
 title('Log Fourier Transform (Original)');colormap('jet'); colorbar;
 
 subplot(1, 3, 2);
-imshow((log(abs((fourier_ideal))) + 1), []);
+fourier_ideal_abs = log(abs(fourier_ideal) + 1);
+imshow(fourier_ideal_abs, [min(fourier_ideal_abs(:)) max(fourier_ideal_abs(:))]);
 title('Log Fourier Transform (Ideal Low-Pass)');colormap('jet'); colorbar;
 
 subplot(1, 3, 3);
-imshow(log(abs((fourier_gaussian)) + 1), []);colormap('jet'); colorbar;
+fourier_gaussian_abs = log(abs((fourier_gaussian)) + 1);
+imshow(fourier_gaussian_abs, [min(fourier_gaussian_abs(:)) max(fourier_gaussian_abs(:))]); colormap('jet'); colorbar;
 title('Log Fourier Transform (Gaussian Low-Pass)');
 
 % Display the frequency responses of the filters
 figure;
 subplot(1, 2, 1);
-imshow(log(abs((ideal_filter)) + 1), []); 
-title('Gaussian Low-Pass Filter Frequency Response ');colormap('jet'); colorbar;
+ideal_log_abs = log(abs((ideal_filter)) + 1);
+imshow(ideal_log_abs, [min(ideal_log_abs(:)) max(ideal_log_abs(:))]); 
+title('Gaussian Low-Pass Filter Frequency Response');colormap('jet'); colorbar;
 
 subplot(1, 2, 2);
-imshow(log(abs((gaussian_filter)) + 1), []);
-title('Gaussian Low-Pass Filter Frequency Response ');colormap('jet'); colorbar;
+gaussian_log_abs = log(abs((gaussian_filter)) + 1);
+imshow(gaussian_log_abs, [min(gaussian_log_abs(:)) max(gaussian_log_abs(:))]);
+title('Gaussian Low-Pass Filter Frequency Response');colormap('jet'); colorbar;
 
 

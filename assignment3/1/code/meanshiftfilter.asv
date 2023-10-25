@@ -6,13 +6,10 @@ function image_output = meanshiftfilter(image_input, sigma, epsilon)
     threshold_spatial = ceil(3*sigma_s); % 3σ (filter_size = 2*threshold_spatial+1)
 
     for i = 1:number_of_rows
-        % i;
         for j = 1:number_of_columns
             v = [i;j;image_input(i,j)];
             c = 0;
             while true
-                x = max(1, min(number_of_columns, ceil(x)));
-                y = max(1, min(number_of_columns, ceil(y)));
                 x = ceil(v(1));
                 y = ceil(v(2));
                 I_xy = v(3);

@@ -19,7 +19,7 @@
 \maketitle
 
 \section{Ideal Low Pass filter}
-In order to create an ideal low-pass filter in Matlab, we created an empty image of the same dimension as the original image. And filled the middle circular region with ones ($H(u,v) = 1 if u^2 + v^2 <=D^2$). This work as our filter in the Fourier domain.
+In order to create an ideal low-pass filter in Matlab, we created an empty image of the same dimension as the original image. And filled the middle circular region with ones ($H(u,v) = 1$ if $u^2 + v^2 \leq D^2$). This work as our filter in the Fourier domain.
 
 After appropriately padding both the original image and the filter, we calculated the Fourier transform of the image followed by performing a fftshift.
 We then, point-wise multiplied the two images to receive the Fourier transform of the filtered image. After an ifftshift and ifft, we obtained the final filtered image. The output is:
@@ -30,7 +30,7 @@ We then, point-wise multiplied the two images to receive the Fourier transform o
     \caption{Original and Filtered Images}
 \end{figure}
 
-The frequency response of the filter is((in log absolute Fourier format)):
+The frequency response of the filter is (in log absolute Fourier format):
 \begin{figure}[h]
     \centering
     \includegraphics[width=.5\linewidth]{img3.png}
@@ -41,7 +41,7 @@ The log absolute Fourier transform of the original and filtered images is as fol
 \begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{img2.png}
-    \caption{Frequency Response of Origininal and Filtered Images}
+    \caption{Frequency Response of Original and Filtered Images}
 \end{figure}
 
 \subsection{Comments}
@@ -127,12 +127,15 @@ We observe that applying the Gaussian Filter has a smoothing effect. This is bec
 Also, as expected, the filters follow a Gaussian distribution and weaken the weightage of high-frequency components in the final image.
 
 \section{Difference Between Ideal and Gaussian}
+
 \subsection{Overall Image}
 We observe the Ringing effect with an ideal low-pass filter, which is not observed in the Gaussian filter.
+
 \subsection{Differences in Log of Absolute of  Fourier Transform}
-In the case of the ideal filter, all frequencies above the cut-off are eliminated, for Gaussian only the weightage of high frequencies is reduced. With increasing D and $\sigma$, more and more frequencies are taken into account and hence we observe less smoothing with D= 80 and $\sigma = 80$ 
-\subsection{Difference in Log of Absolute of Foruier of Filter}
-We implemented an ideal filter, which in the frequency domain is just a circle of ones within a threshold and 0 otherwise. For higher D, the circle of allowed frequencies is larger.
+In the case of the ideal filter, all frequencies above the cut-off are eliminated, for Gaussian only the weightage of high frequencies is reduced. With increasing D and $\sigma$, more and more frequencies are taken into account and hence we observe less smoothing with $D = 80$ and $\sigma = 80$.
+
+\subsection{Difference in Log of Absolute of Fourier of Filter}
+We implemented an ideal filter, which in the frequency domain is just a circle of ones within a threshold and 0 otherwise. For higher $D$, the circle of allowed frequencies is larger.
 We implemented a Gaussian Filter, which is the frequency domain that follows the Gaussian distribution.
 
 

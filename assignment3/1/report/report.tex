@@ -1,16 +1,189 @@
-\documentclass[a4paper,landscape]{article}
+\documentclass[a4paper, landscape]{article}
 
-\usepackage[DIV=18]{typearea}
+\usepackage[utf8]{inputenc}
+\usepackage[DIV=12]{typearea}
 \usepackage{microtype}
-\usepackage{enumitem}
+\usepackage{float}
 \usepackage{mathtools, amssymb}
-\usepackage{bbm}
-\usepackage{nicematrix}
-\setcounter{MaxMatrixCols}{20}
-\setlength{\parindent}{0em}
-\title{1}
-\date{}
+\usepackage{parskip}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage[colorlinks=true]{hyperref}
+
+\title{8}
+\date{} 
+
+\graphicspath{ {../images} }
+
+\hypersetup{linktoc=all}
 
 \begin{document}
 \maketitle
+\section{Meta images}
+\ref{fig:bo}, \ref{fig:ko} show the original and the noisy images that are to be fed to  the mean shift filter.
+
+As $\sigma$ increases, the noise in both images increases. 
+Since, the resolution of the Kodak image is much higher than the Barbara image, the effect of noise on the details is lesser. Hence, we expect more noise degradation in the Barbara image and this is also observed.
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{barbara256.png}
+        \caption{Given image}
+    \end{subfigure}
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{barbara256,σ_noise5.png}
+        \caption{Corrupted with Gaussian noise $\mu=0, \sigma=5$}
+    \end{subfigure}
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{barbara256,σ_noise10.png}
+        \caption{Corrupted with Gaussian noise $\mu=0, \sigma=10$}
+    \end{subfigure}
+    \caption{Barbara image}
+    \label{fig:bo}
+\end{figure}
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{kodak24.png}
+        \caption{Given image}
+    \end{subfigure}
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{kodak24,σ_noise5.png}
+        \caption{Corrupted with Gaussian noise $\mu=0, \sigma=5$}
+    \end{subfigure}
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{kodak24,σ_noise10.png}
+        \caption{Corrupted with Gaussian noise $\mu=0, \sigma=10$}
+    \end{subfigure}
+    \caption{Kodak image}
+    \label{fig:ko}
+\end{figure}
+\section{Mean Shift filter on original images}{\label{sec:bfo}}
+\ref{fig:bs}, \ref{fig:ks} show the results of Mean Shift filter applied on the original Barbara and Kodak image.
+
+As we go from left to right (increasing $\sigma_s, \sigma_r$), for both images, the image looks smoother.
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{barbara256,σ_spatial0.1,σ_range0.1.png}
+        \caption{$\sigma_s=0.1, \sigma_r=0.1$}
+    \end{subfigure}
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{barbara256,σ_spatial2,σ_range2.png}
+        \caption{$\sigma_s=2, \sigma_r=2$}
+    \end{subfigure}
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{barbara256,σ_spatial3,σ_range15.png}
+        \caption{$\sigma_s=3, \sigma_r=15$}
+    \end{subfigure}
+    \caption{Mean Shift filter on original Barbara image}
+    \label{fig:bs}
+\end{figure}
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{kodak24,σ_spatial0.1,σ_range0.1.png}
+        \caption{$\sigma_s=0.1, \sigma_r=0.1$}
+    \end{subfigure}
+    \begin{subfigure}{0.33\linewidth}s
+        \centering
+        \includegraphics[width=\linewidth]{kodak24,σ_spatial2,σ_range2.png}
+        \caption{$\sigma_s=2, \sigma_r=2$}
+    \end{subfigure}
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{kodak24,σ_spatial3,σ_range15.png}
+        \caption{$\sigma_s=3, \sigma_r=15$}
+    \end{subfigure}
+    \caption{Mean Shift filter on original Kodak image}
+    \label{fig:ks}
+\end{figure}
+\section{Mean Shift filter on noisy images}
+\ref{fig:bn}, \ref{fig:kn} show the results of Mean Shift filter applied on the noisy Barbara and Kodak image.
+
+We get similar results as in \ref{sec:bfo}, from left to right (increasing $\sigma_s, \sigma_r$), for both images, smoothening increases.
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{barbara256,σ_noise5,σ_spatial0.1,σ_range0.1.png}
+        \caption{$\mu, \sigma = 0, 5, \sigma_s=0.1, \sigma_r=0.1$}
+    \end{subfigure}
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{barbara256,σ_noise5,σ_spatial2,σ_range2.png}
+        \caption{$\mu, \sigma = 0, 5, \sigma_s=2, \sigma_r=2$}
+    \end{subfigure}
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{barbara256,σ_noise5,σ_spatial3,σ_range15.png}
+        \caption{$\mu, \sigma = 0, 5, \sigma_s=3, \sigma_r=15$}
+    \end{subfigure}
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{barbara256,σ_noise10,σ_spatial0.1,σ_range0.1.png}
+        \caption{$\mu, \sigma = 0, 10, \sigma_s=0.1, \sigma_r=0.1$}
+    \end{subfigure}
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{barbara256,σ_noise10,σ_spatial2,σ_range2.png}
+        \caption{$\mu, \sigma = 0, 10, \sigma_s=2, \sigma_r=2$}
+    \end{subfigure}
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{barbara256,σ_noise10,σ_spatial3,σ_range15.png}
+        \caption{$\mu, \sigma = 0, 10, \sigma_s=3, \sigma_r=15$}
+    \end{subfigure}
+    \caption{Mean Shift filter on noisy Barbara images}
+    \label{fig:bn}
+\end{figure}
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{kodak24,σ_noise5,σ_spatial0.1,σ_range0.1.png}
+        \caption{$\mu, \sigma = 0, 5, \sigma_s=0.1, \sigma_r=0.1$}
+    \end{subfigure}
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{kodak24,σ_noise5,σ_spatial2,σ_range2.png}
+        \caption{$\mu, \sigma = 0, 5, \sigma_s=2, \sigma_r=2$}
+    \end{subfigure}
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{kodak24,σ_noise5,σ_spatial3,σ_range15.png}
+        \caption{$\mu, \sigma = 0, 5, \sigma_s=3, \sigma_r=15$}
+    \end{subfigure}
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{kodak24,σ_noise10,σ_spatial0.1,σ_range0.1.png}
+        \caption{$\mu, \sigma = 0, 10, \sigma_s=0.1, \sigma_r=0.1$}
+    \end{subfigure}
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{kodak24,σ_noise10,σ_spatial2,σ_range2.png}
+        \caption{$\mu, \sigma = 0, 10, \sigma_s=2, \sigma_r=2$}
+    \end{subfigure}
+    \begin{subfigure}{0.33\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{kodak24,σ_noise10,σ_spatial3,σ_range15.png}
+        \caption{$\mu, \sigma = 0, 10, \sigma_s=3, \sigma_r=15$}
+    \end{subfigure}
+    \caption{Mean Shift filter on noisy Kodak images}
+    \label{fig:kn}
+\end{figure}
+% \section{Mean Shift filter creation}
+
+{\it Note the size of the filter is such that it includes the points at most ${\lceil3\sigma_s\rceil}$ away from the center point.
+}
 \end{document}
