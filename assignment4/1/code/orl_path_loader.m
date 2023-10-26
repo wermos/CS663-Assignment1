@@ -12,7 +12,7 @@ function [trainingArray, testingArray] = orl_path_loader
 
     trainingArrayIdx = uint16(1);
     testingArrayIdx = uint16(1);
-    for i = 1:32
+    for i = 1:NUM_PEOPLE
         dir_path = append(root_path, "s", int2str(i), "/");
         for j = 1:10
             full_path = append(dir_path, int2str(j), ".pgm");
