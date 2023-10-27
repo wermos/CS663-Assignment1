@@ -1,5 +1,3 @@
-tic
-
 [trainingArray, testingArray, galleryImages] = orl_path_loader();
 
 % Initialize training data array
@@ -26,19 +24,19 @@ for k = 1:num_gallery_imgs
     galleryImageData(:, k) = reshape(img, [], 1);
 end
 
+% Gather testing data information
+[num_testing_rows, ~] = size(testingArray);
+
 k_values = [1, 2, 3, 5, 10, 15, 20, 30, 50, 75, 100, 150, 170];
 
 recognition_rate = zeros(1, numel(k_values));
 
 for i = 1:numel(k_values)
-    [eigenvectors, img_avg] = PCA(trainingData, 100);
+    [eigenvectors, img_avg] = PCA(trainingData, k_values(i));
 
     % The i'th row of `coeffs` stores the eigencoefficients of the k'th
     % eigenvector for the i'th gallery image.
     gallery_coeffs = eigencoefficient(galleryImageData, eigenvectors);
-    
-    % Initialize testing data array
-    [num_testing_rows, ~] = size(testingArray);
     
     % a counter to keep track of how many times the system recognized the
     % face correctly.
@@ -56,10 +54,10 @@ for i = 1:numel(k_values)
     
         gallery_coeffs_intermediate = gallery_coeffs - test_eigen_coeffs;
     
-        norms = zeros(1, num_gallery_imgs);
+        norms = zeros(num_gallery_imgs, 1);
     
         for k = 1:num_gallery_imgs
-            norms(k) = norm(gallery_coeffs_intermediate(k));
+            norms(k) = norm(gallery_coeffs_intermediate(:, k));
         end
     
         [~, face_num_guess] = min(norms);
@@ -75,9 +73,7 @@ for i = 1:numel(k_values)
     recognition_rate(i) = correct_counter;
 end
 
-plot(k_values, recognition_rate);
-
-toc
+plot(k_values, recognition_rate / num_testing_rows, '-sb');
 
 function coeffs = eigencoefficient(galleryImageData, eigenVectors)
     % face coefficient calculator for the eigenfaces
