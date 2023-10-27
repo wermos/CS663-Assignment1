@@ -14,7 +14,9 @@ end
 
 [eigenfaces, ~] = PCA(trainingData, 25);
 
-tiledlayout(5, 5);
+t = tiledlayout(5, 5, "TileSpacing", "compact", "Padding", "compact");
+
+% title(t, "The 25 Eigenfaces For The ORL Dataset");
 
 for i = 1:25
     img_data = reshape(eigenfaces(:, i), [112, 92]);
