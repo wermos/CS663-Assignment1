@@ -22,5 +22,9 @@ function [eigenvectors, avg] = PCA(data, k)
 
     covariance = 1 / (num_cols - 1) * covariance;
 
+    % covariance = cov(xi);
+
+    disp(size(covariance));
+
     [eigenvectors, ~] = eigs(covariance, k);
 end
