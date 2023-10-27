@@ -24,5 +24,5 @@ for i = 1:25
     imshow(img_data, []);
 end
 
-exportgraphics(gca, "../images/eigenfaces.png");
-exportgraphics(gca, "../images/eigenfaces.pdf");
+exportgraphics(gcf, "../images/eigenfaces.png");
+exportgraphics(gcf, "../images/eigenfaces.pdf");
