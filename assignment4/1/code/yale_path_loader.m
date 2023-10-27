@@ -40,10 +40,4 @@ function [trainingArray, testingArray] = yale_path_loader
     end
 
     testingArray = testingArray'; % for homogeneity
-
-    % disp("trainingArray:")
-    % disp(trainingArray)
-
-    % disp("testingArray:")
-    % disp(testingArray')
 end
