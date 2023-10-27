@@ -1,15 +1,65 @@
-\documentclass[a4paper,landscape]{article}
+\documentclass[a4paper]{article}
 
-\usepackage[DIV=18]{typearea}
+\usepackage[DIV=12]{typearea}
 \usepackage{microtype}
-\usepackage{enumitem}
+\usepackage[shortlabels]{enumitem}
 \usepackage{mathtools, amssymb}
-\usepackage{bbm}
-\usepackage{nicematrix}
+\usepackage{bm}
 \setlength{\parindent}{0em}
-\title{4}
+\title{5}
 \date{}
 
 \begin{document}
 \maketitle
+\begin{enumerate}[(a)]
+\item 
+Covariance matrix in PCA is given as follows
+\begin{equation}
+	\bm{C} = \frac{1}{N-1}\bm{X}\bm{X}^T \text{ where $\bm{X} = \begin{bmatrix} \overline{\bm{x}}_1 & \cdots & \overline{\bm{x}}_N \end{bmatrix}$ and $\overline{\bm{x}}\in \mathbb{R}^d$}
+\end{equation}
+Now, this covariance matrix is symmetric as
+\begin{equation}
+\begin{aligned}
+	\bm{C}^T &= \left(\frac{1}{N-1}\bm{X}\bm{X}^T\right)^T\\
+	& = \frac{1}{N-1}(\bm{X}^T)^T \bm{X}^T \\	
+	& = \frac{1}{N-1}\bm{X}\bm{X}^T \\	
+	& = \bm{C} \\	
+\end{aligned}
+\end{equation}
+Now, to prove that $\bm{C}$ is positive semi-definite we assume the opposite and show its infeasibility. That is, assume it is not positive semi-definite then there exists a vector $\bm{y}\in\mathbb{R}^d$ such that $\bm{y}^T\bm{C}\bm{y}<0$.
+\begin{equation}
+ 	\begin{aligned}
+ 		\text{Now, }\exists \bm{y}\in\mathbb{R}^d | \bm{y}^T\bm{C}\bm{y}<0&\Leftrightarrow\bm{y}^T\frac{1}{N-1}\bm{X}\bm{X}^T\bm{y}<0\\
+ 		&\Leftrightarrow \frac{1}{N-1}\bm{y}^T\bm{X}\bm{X}^T\bm{y}<0\\
+ 		&\Leftrightarrow \frac{1}{N-1}(\bm{X}^T\bm{y})^T\bm{X}^T\bm{y}<0\\
+ 		&\Leftrightarrow \frac{1}{N-1}\|\bm{X}^T\bm{y}\|<0\\
+ 		&\Leftrightarrow \|\bm{X}^T\bm{y}\|<0\\
+ 		&\Leftrightarrow \bot
+ 	\end{aligned}
+\end{equation}
+a contradiction.
+\item 
+Let $\bm{v}_1, \bm{v}_2$ be two eigenvectors of $\bm{A}$ with distinct eigenvalues $\lambda_1, \lambda_2$ respectively.
+Now, consider
+\begin{equation}
+	\begin{aligned}
+		\lambda_1 \bm{v}_1^T \bm{v}_2
+		&= \bm{A} \bm{v}_1^T \bm{v}_2\\
+		&= \bm{A} \bm{v}_2^T \bm{v}_1 & \hfill{(\text{$\bm{v}_1^T \bm{v}_2$ is a scalar, so it is equal to its transpose})}\\
+		&= \lambda_2 \bm{v}_2^T \bm{v}_1\\
+		&= \lambda_2 \bm{v}_1^T \bm{v}_2 & \hfill{(\text{taking transpose again})}\\
+	\end{aligned}
+\end{equation}
+This implies
+\begin{equation}
+	\begin{aligned}
+		&\lambda_1 \bm{v}_1^T \bm{v}_2 - \lambda_2 \bm{v}_1^T \bm{v}_2 = 0\\
+		&\Leftrightarrow(\lambda_1 - \lambda_2) \bm{v}_1^T \bm{v}_2 = 0\\
+		&\Leftrightarrow\bm{v}_1^T \bm{v}_2 = 0 & \hfill{(\text{since eigenvalues are distinct})}
+	\end{aligned}
+\end{equation}
+Hence, the eigenvectors of a symmetric matrix are orthonormal.
+\item 
+\item 
+\end{enumerate}
 \end{document}
