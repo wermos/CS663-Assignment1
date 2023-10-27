@@ -1,4 +1,4 @@
-function [eigenvectors, avg] = PCA(data, k)
+function [eigenvectors, avg] = PCA_covariance(data, k)
     % `data` must be a matrix of dimensions (wh × I) where w is the width
     % of the image, h is the height, and I is the number of images.
     %
