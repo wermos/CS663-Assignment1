@@ -12,10 +12,11 @@ function [trainingArray, testingArray, galleryImages] = yale_path_loader
     % we needed to subtract 1 in the previous line because number 14 is
     % missing
     testingArray = strings((NUM_PEOPLE - 1) * NUM_TRAINING_IMAGES, 2);
-    galleryImages = strings(NUM_PEOPLE, 1);
+    galleryImages = strings(NUM_PEOPLE - 1, 1);
 
     trainingArrayIdx = uint16(1);
     testingArrayIdx = uint16(1);
+    galleryIdx = uint16(1);
     for i = 1:39
         if i == 14
             continue
@@ -30,12 +31,20 @@ function [trainingArray, testingArray, galleryImages] = yale_path_loader
         % Loop through the files
         for j = 1:numel(image_paths)
             if ~image_paths(j).isdir % Check if it's not a directory
+
+                full_path = append(dir_path, image_paths(j).name);
+
+                if counter == 1
+                    galleryImages(galleryIdx) = full_path;
+                    galleryIdx = galleryIdx + 1;
+                end
+
                 if counter <= 40
-                    trainingArray(trainingArrayIdx) = image_paths(j).name;
+                    trainingArray(trainingArrayIdx) = full_path;
                     trainingArrayIdx = trainingArrayIdx + 1;
                     counter = counter + 1;
                 else
-                    testingArray(testingArrayIdx, 1) = image_paths(j).name;
+                    testingArray(testingArrayIdx, 1) = full_path;
                     testingArray(testingArrayIdx, 2) = int2str(i);
                     testingArrayIdx = testingArrayIdx + 1;
                 end
