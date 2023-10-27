@@ -32,11 +32,11 @@ k_values = [1, 2, 3, 5, 10, 15, 20, 30, 50, 75, 100, 150, 170];
 recognition_rate = zeros(1, numel(k_values));
 
 for i = 1:numel(k_values)
-    [eigenvectors, img_avg] = PCA(trainingData, k_values(i));
+    [eigenvectors, img_avg] = PCA_covariance(trainingData, k_values(i));
 
-    % The i'th row of `coeffs` stores the eigencoefficients of the k'th
-    % eigenvector for the i'th gallery image.
-    gallery_coeffs = eigencoefficient(galleryImageData, eigenvectors);
+    % The i'th column stores the eigencoefficients of the k'th eigenvector
+    % for the i'th gallery image.
+    gallery_coeffs = eigenvectors' * galleryImageData;
     
     % a counter to keep track of how many times the system recognized the
     % face correctly.
@@ -65,17 +65,11 @@ for i = 1:numel(k_values)
         if face_num == face_num_guess
             correct_counter = correct_counter + 1;
         end
-
-        % disp(face_num_guess);
-        % disp(face_num);
     end
 
     recognition_rate(i) = correct_counter;
 end
 
-plot(k_values, recognition_rate / num_testing_rows, '-sb');
+plot(k_values, recognition_rate, '-sb');
 
-function coeffs = eigencoefficient(galleryImageData, eigenVectors)
-    % face coefficient calculator for the eigenfaces
-    coeffs = eigenVectors' * galleryImageData;
-end
+saveas(gcf, "../images/recognition_rate_orl.png")
