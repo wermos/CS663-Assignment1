@@ -76,4 +76,4 @@ plot(k_values, recognition_rate, '-sb');
 
 toc
 
-saveas(gcf, "recognition_rate_yale.png")
+saveas(gcf, "../images/recognition_rate_yale.png")
