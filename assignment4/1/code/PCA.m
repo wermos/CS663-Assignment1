@@ -12,19 +12,23 @@ function [eigenvectors, avg] = PCA(data, k)
     
     xi = data - avg;
 
-    [num_rows, num_cols] = size(data);
+    % naive covariance implementation
+    % [num_rows, num_cols] = size(data);
+    % 
+    % covariance = zeros(num_rows);
+    % 
+    % for i = 1:num_cols
+    %     covariance = covariance + xi(:, i) * xi(:, i)';
+    % end
+    % 
+    % covariance = 1 / (num_cols - 1) * covariance;
 
-    covariance = zeros(num_rows);
+    % the cov function expects the columns to be the random variables and
+    % the rows to be observations (i.e., image data in this case)
+    covariance = cov(xi');
 
-    for i = 1:num_cols
-        covariance = covariance + xi(:, i) * xi(:, i)';
-    end
-
-    covariance = 1 / (num_cols - 1) * covariance;
-
-    % covariance = cov(xi);
-
-    disp(size(covariance));
+    % debug print stuff
+    % disp(size(covariance));
 
     [eigenvectors, ~] = eigs(covariance, k);
 end
