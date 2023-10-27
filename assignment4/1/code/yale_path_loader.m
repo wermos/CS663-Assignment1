@@ -1,4 +1,4 @@
-function [trainingArray, testingArray] = yale_path_loader
+function [trainingArray, testingArray, galleryImages] = yale_path_loader
     root_path = "../images/CroppedYale/";
 
     % constants
@@ -11,9 +11,11 @@ function [trainingArray, testingArray] = yale_path_loader
     trainingArray = strings((NUM_PEOPLE - 1) * NUM_TRAINING_IMAGES, 1);
     % we needed to subtract 1 in the previous line because number 14 is
     % missing
-    testingArray = [""];
+    testingArray = strings((NUM_PEOPLE - 1) * NUM_TRAINING_IMAGES, 2);
+    galleryImages = strings(NUM_PEOPLE, 1);
 
     trainingArrayIdx = uint16(1);
+    testingArrayIdx = uint16(1);
     for i = 1:39
         if i == 14
             continue
@@ -22,7 +24,7 @@ function [trainingArray, testingArray] = yale_path_loader
         formatted_number = sprintf('%02d', i);
         dir_path = append(root_path, "yaleB", formatted_number, "/");
 
-        counter = uint16(1);
+        counter = 1;
 
         image_paths = dir(dir_path);
         % Loop through the files
@@ -33,11 +35,14 @@ function [trainingArray, testingArray] = yale_path_loader
                     trainingArrayIdx = trainingArrayIdx + 1;
                     counter = counter + 1;
                 else
-                    testingArray(end + 1) = image_paths(j).name;
+                    testingArray(testingArrayIdx, 1) = image_paths(j).name;
+                    testingArray(testingArrayIdx, 2) = int2str(i);
+                    testingArrayIdx = testingArrayIdx + 1;
                 end
             end
         end
     end
 
-    testingArray = testingArray'; % for homogeneity
+    non_empty_rows = ~all(testingArray == "", 2);
+    testingArray = testingArray(non_empty_rows, :);
 end
