@@ -1,16 +1,223 @@
 \documentclass[a4paper,landscape]{article}
 
-\usepackage[DIV=18]{typearea}
+\usepackage[DIV=16]{typearea}
 \usepackage{microtype}
-\usepackage{enumitem}
+\usepackage{array}   % for \newcolumntype macro
+\newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+\usepackage[shortlabels]{enumitem}
 \usepackage{mathtools, amssymb}
-\usepackage{bbm}
-\usepackage{nicematrix}
-\setcounter{MaxMatrixCols}{20}
+\usepackage{bm}
+\usepackage{minted}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true
+}
 \setlength{\parindent}{0em}
 \title{5}
 \date{}
 
 \begin{document}
 \maketitle
+We assume real matrices $\bm{A}\in\mathbb{R}^{m\times n}$ for this problem
+\section{SVD}
+\begin{equation}
+	\bm{A} = \bm{U}\bm{S}\bm{V}^T
+\end{equation}
+where $\bm{U}\in\mathbb{R}^{m\times m}$, $\bm{V}\in\mathbb{R}^{n\times n}$, $\bm{S}\in\mathbb{R}^{m\times n}$, $\bm{U}, \bm{V}$ are orthonormal and $\bm{S}$ is a rectangular diagonal matrix, i.e. 
+\begin{equation}
+	\bm{S} = 
+	\begin{cases}
+		\bm{\hat{S}}_{m\times n} & \text{ if $m=n$} \\[1em]
+		\begin{bmatrix}
+			\bm{\hat{S}}_{n\times n}\\
+			\bm{O}_{(m-n) \times n}
+		\end{bmatrix} & \text{ if $m>n$} \\[2em]
+		\begin{bmatrix}
+			\bm{\hat{S}}_{m\times m} & \bm{O}_{m \times (n-m)}
+		\end{bmatrix} & \text{ if $m<n$}
+	\end{cases}
+\end{equation}
+where $\bm{\hat{S}}$ is a diagonal matrix with its diagonal entries called singular values of $\bm{A}$, and $\bm{O}$ is a zero matrix of appropriate dimension.
+\section{Solution}
+Let's calculate $\bm{S}^T\bm{S}$ for all the above cases.
+\begin{equation}
+	\bm{S}^T\bm{S} = 
+	\begin{cases}
+	\begin{tabular}{LLLL}
+		\bm{\hat{S}}_{n\times m} \bm{\hat{S}}_{m\times n} & = \bm{\hat{S}}_{n\times n} \bm{\hat{S}}_{n\times n} & = \bm{\hat{S}}_{n\times n}^2 & \text{ if $m=n$} \\[1em]
+		\begin{bmatrix}
+			\bm{\hat{S}}_{n\times n} & \bm{O}_{n \times (m-n)}
+		\end{bmatrix}
+		\begin{bmatrix}
+			\bm{\hat{S}}_{n\times n}\\
+			\bm{O}_{(m-n) \times n}
+		\end{bmatrix} & = \bm{\hat{S}}_{n\times n}\bm{\hat{S}}_{n\times n} + \bm{O}_{n \times (m-n)}\bm{O}_{(m-n) \times n} & = \bm{\hat{S}}_{n\times n}^2 & \text{ if $m>n$} \\[2em]
+		\begin{bmatrix}
+			\bm{\hat{S}}_{m\times m}\\
+			\bm{O}_{(n-m) \times m}
+		\end{bmatrix}
+		\begin{bmatrix}
+			\bm{\hat{S}}_{m\times m} & \bm{O}_{m \times (n-m)}
+		\end{bmatrix} & = 
+		\begin{bmatrix}
+			\bm{\hat{S}}_{m\times m} \bm{\hat{S}}_{m\times m} & \bm{\hat{S}}_{m\times m}\bm{O}_{m \times (n-m)}\\
+			\bm{O}_{(n-m) \times m}\bm{\hat{S}}_{m\times m} & \bm{O}_{(n-m) \times n}\bm{O}_{m \times (n-m)}
+		\end{bmatrix} & = 
+		\begin{bmatrix}
+			\bm{\hat{S}}_{m\times m}^2 & \bm{O}_{m \times (n-m)}\\
+			\bm{O}_{(n-m) \times m} & \bm{O}_{(n-m) \times (n-n)}
+		\end{bmatrix}  & \text{ if $m<n$}
+	\end{tabular}
+	\end{cases}
+\end{equation}
+Hence $\bm{S}^T\bm{S}$ is always a diagonal matrix with the non-zero diagonal entries equal to the square of non-zero singular values of $\bm{A}$. We will use this result below.
+
+Let $\bm{D}=\bm{S}^T\bm{S}$ be this diagonal matrix.
+\begin{enumerate}[(a)]
+	\item Now, consider $\bm{A}^T\bm{A}$, \label{itm:a}
+	\begin{equation}\label{eq:AtA}
+		\begin{aligned}
+			\bm{A}^T\bm{A} &= (\bm{U}\bm{S}\bm{V}^T)^T \bm{U}\bm{S}\bm{V}^T\\
+			&=  (\bm{V}^T)^T\bm{S}^T\bm{U}^T \bm{U}\bm{S}\bm{V}^T\\
+			&=  \bm{V}\bm{S}^T\bm{S}\bm{V}^T &\hfill{(\bm{U}^T \bm{U} = \bm{I})}\\
+			&=  (\bm{V}^T)^{-1}\bm{D}\bm{V}^T &\hfill{(\bm{V}^T \bm{V} = \bm{I})}\\
+		\end{aligned}
+	\end{equation}
+	With this process, we have obtained a \emph{diagonalization} of $\bm{A}^T\bm{A}$ with transformation matrix $V^T$.
+	Hence, from linear algebra theory, diagonal entries of $\bm{D}$ are the eigenvalues of $\bm{A}^T\bm{A}$.
+	Now, we know that non-zero diagonal entries of $\bm{D}$ are equal to the square of non-zero singular values of $\bm{A}$. 
+	Hence, the eigenvalues of $\bm{A}^T\bm{A}$ are equal to the square of non-zero singular values of $\bm{A}$ which implies that the non-zero singular values of $\bm{A}$ are the square roots of non-zero eigenvalues of $\bm{A}^T\bm{A}$.
+	
+	Similarly, consider $\bm{A}\bm{A}^T$, 
+	\begin{equation}
+		\begin{aligned}
+			\bm{A}\bm{A}^T &= \bm{U}\bm{S}\bm{V}^T (\bm{U}\bm{S}\bm{V}^T)^T\\
+			&=  \bm{U}\bm{S}\bm{V}^T (\bm{V}^T)^T\bm{S}^T\bm{U}^T\\
+			&=  \bm{U}\bm{S}\bm{S}^T\bm{U}^T &\hfill{(\bm{V}^T \bm{V} = \bm{I})}\\
+			&=  (\bm{U}^T)^{-1}\bm{D}^T\bm{U}^T &\hfill{(\bm{U}^T \bm{U} = \bm{I})}\\
+			&=  (\bm{U}^T)^{-1}\bm{D}\bm{U}^T &\hfill{(\bm{D}^T = \bm{D} \text{ as $\bm{D}$ is diagonal})}\\
+		\end{aligned}
+	\end{equation}
+	With this process, we have obtained a \emph{diagonalization} of $\bm{A}\bm{A}^T$ with transformation matrix $U^T$.
+	Hence, from linear algebra theory, diagonal entries of $\bm{D}$ are the eigenvalues of $\bm{A}\bm{A}^T$.
+	Now, we know that non-zero diagonal entries of $\bm{D}$ are equal to the square of non-zero singular values of $\bm{A}$. 
+	Hence, the eigenvalues of $\bm{A}\bm{A}^T$ are equal to the square of non-zero singular values of $\bm{A}$ which implies that the non-zero singular values of $\bm{A}$ are the square roots of non-zero eigenvalues of $\bm{A}\bm{A}^T$.
+	\item 
+	The Frobenius norm of a matrix $\|\bm{A}\|_F$ is given by
+	\begin{equation}
+		\begin{aligned}
+			\|\bm{A}\|_F^2 &= \sum_{i}\sum_{j}a_{ij}^2\\
+			&= \operatorname{trace}(\bm{A}^T\bm{A})\\
+			&= \operatorname{trace}(\bm{V}\bm{S}^T\bm{S}\bm{V}^T) & \hfill{(\text{From \ref{eq:AtA}})}\\
+			&= \operatorname{trace}(\underbrace{\bm{V}^T}_{A}\underbrace{\bm{V}\bm{S}^T\bm{S}}_{B}) & \hfill{(\text{Using $\operatorname{trace}(\bm{A}\bm{B})=\operatorname{trace}(\bm{B}\bm{A})$})}\\
+			&= \operatorname{trace}(\bm{S}^T\bm{S}) &\hfill{(\bm{V}^T \bm{V} = \bm{I})}\\
+			&= \operatorname{trace}(\bm{D})
+			% &= \sum_{i=1}^{\min(m,n)}\sigma_i^2
+		\end{aligned}
+	\end{equation}
+	Now $\operatorname{trace}(\bm{D})$ is sum of non-zero diagonal entries of $\bm{D}$. As these entries are equal to the square of non-zero singular values of $\bm{A}$, the squared Frobenius norm of a matrix is equal to the sum of squares of its singular values.
+	\item 
+	Let's try to understand this through an example
+\begin{minted}[frame=single, breaklines]{matlab}
+>> A = [1 2 3 4; 5 6 7 8; 9 10 11 12]
+A =
+     1     2     3     4
+     5     6     7     8
+     9    10    11    12
+
+>> [U,S,V] = svd(A)
+U =
+
+   -0.2067   -0.8892    0.4082
+   -0.5183   -0.2544   -0.8165
+   -0.8298    0.3804    0.4082
+S =
+
+   25.4368         0         0         0
+         0    1.7226         0         0
+         0         0    0.0000         0
+V =
+   -0.4036    0.7329    0.5241    0.1592
+   -0.4647    0.2898   -0.8174    0.1784
+   -0.5259   -0.1532    0.0626   -0.8343
+   -0.5870   -0.5962    0.2307    0.4968
+
+>> [V_1, D_1] = eig(A'*A)
+V_1 =
+   -0.1732   -0.5196    0.7329    0.4036
+   -0.1564    0.8219    0.2898    0.4647
+    0.8323   -0.0849   -0.1532    0.5259
+   -0.5028   -0.2173   -0.5962    0.5870
+D_1 =
+   -0.0000         0         0         0
+         0    0.0000         0         0
+         0         0    2.9674         0
+         0         0         0  647.0326
+
+>> [U_1, D_2] = eig(A*A')
+U_1 =
+
+   -0.4082    0.8892    0.2067
+    0.8165    0.2544    0.5183
+   -0.4082   -0.3804    0.8298
+D_2 =
+
+   -0.0000         0         0
+         0    2.9674         0
+         0         0  647.0326
+\end{minted}
+Firstly, we observe that the diagonal entries of $\bm{D}_1$ and $\bm{D}_2$ are in ascending order but the diagonal entries of $\bm{S}$ are in descending order. According to \href{https://in.mathworks.com/help/matlab/ref/eig.html}{MATLAB documentation} ``\mintinline{matlab}|eig| does not always return the eigenvalues and eigenvectors in sorted order''.
+
+Secondly, we observe that $\bm{U} = -\bm{U}_1$, and some columns of $\bm{V}$ also have different signs. In general, if $\bm{v}$ is an eigenvector of a matrix with some eigenvalue then $-\bm{v}$ is also an eigenvector of that matrix with same eigenvalue. As $\bm{U}, \bm{V}$ are eigenvectors here, we can't be sure about the sign.
+
+Hence, to rectify this, we need to fix the order and use consitent signs for the eigenvectors
+
+To fix the first issue, we can simply sort the eigenvalues and reorder columns of $\bm{U}, \bm{V}$ appropriately.
+
+For the second issue, we know that $\bm{A}\bm{v}_i=\sigma_i\bm{u}_i$ where $\bm{v}_i, \bm{u}_i$ are respective columns of $\bm{U}, \bm{V}$ after reordering. So, we can check this relation for each non-zero singular value and if there is a sign difference we flip the signs of any one vector.
+
+The code is given below
+\begin{minted}[frame=single, breaklines]{matlab}
+A = [1 2 3 4; 5 6 7 8; 9 10 11 12];
+[U, S, V] = svd_eig(A, 1e-6);
+A - U*S*V'
+function [C, D] = sort_eig(A, B)
+    [b, i] = sort(diag(B), 'descend');
+    D = B(i,i);
+    C = A(:,i);
+end
+
+function [U, S, V] = svd_eig(A, epsilon)
+    s = size(A);
+    m = s(1); n = s(2);
+    ATA = A'*A;
+    AAT = A*A';
+    [V_1, D_1] = eig(ATA);
+    [V, D_1] = sort_eig(V_1, D_1);
+    [U_1, D_2] = eig(AAT);
+    [U, D_2] = sort_eig(U_1, D_2);
+    if n > m
+        S = D_1;
+    else
+        S = D_2;
+    end
+    S = sqrt(S(1:m, 1:n));
+    sign = ones(1,m);
+    for i = 1:min(m,n)
+        if S(i,i) > epsilon % else we assume the singular value is zero
+            if norm(U(:,i) - A*V(:,i)/S(i,i)) > epsilon
+                sign(i) = -1;
+            end
+        end
+    end
+    U = U.*sign;
+end
+% this gives the following output for A - U*S*V'
+1.0e-07 *
+
+-0.1002    0.1585   -0.0164   -0.0419
+ 0.2005   -0.3171    0.0328    0.0839
+-0.1002    0.1585   -0.0164   -0.0419
+\end{minted}
+\end{enumerate}
 \end{document}
