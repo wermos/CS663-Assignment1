@@ -8,7 +8,7 @@ function [trainingArray, testingArray, galleryImages] = orl_path_loader
 
     % we only need a 1D array
     trainingArray = strings(NUM_PEOPLE * NUM_TRAINING_IMAGES, 1);
-    testingArray = strings(NUM_PEOPLE * NUM_TESTING_IMAGES, 1);
+    testingArray = strings(NUM_PEOPLE * NUM_TESTING_IMAGES, 2);
     galleryImages = strings(NUM_PEOPLE, 1);
 
     trainingArrayIdx = uint16(1);
@@ -27,7 +27,12 @@ function [trainingArray, testingArray, galleryImages] = orl_path_loader
                 trainingArray(trainingArrayIdx) = full_path;
                 trainingArrayIdx = trainingArrayIdx + 1;
             else
-                testingArray(testingArrayIdx) = full_path;
+                testingArray(testingArrayIdx, 1) = full_path;
+                % we store the corresponding index so that we can use that
+                % info to check if the system correctly recognized the
+                % image or not.
+                testingArray(testingArrayIdx, 2) = int2str(i);
+
                 testingArrayIdx = testingArrayIdx + 1;
             end
         end
