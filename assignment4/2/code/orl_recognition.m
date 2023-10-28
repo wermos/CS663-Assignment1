@@ -1,4 +1,4 @@
-[trainingArray, testingArray, galleryImages] = q2_orl_path_loader();
+[trainingArray, testingArray, galleryImages] = orl_path_loader();
 
 % Initialize training data array
 [num_training_rows, ~] = size(trainingArray);
