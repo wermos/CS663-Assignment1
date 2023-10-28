@@ -1,16 +1,43 @@
-\documentclass[a4paper,landscape]{article}
+\documentclass[a4paper]{article}
 
-\usepackage[DIV=18]{typearea}
+\usepackage[utf8]{inputenc}
 \usepackage{microtype}
 \usepackage{enumitem}
-\usepackage{mathtools, amssymb}
-\usepackage{bbm}
-\usepackage{nicematrix}
-\setcounter{MaxMatrixCols}{20}
+\usepackage{comment}
+\usepackage{float, graphicx}
+\usepackage{amsmath}
+\usepackage{mathtools, amssymb, mathrsfs}
+\usepackage{caption}
+\usepackage{subcaption}
+
 \setlength{\parindent}{0em}
+
+
 \title{2}
 \date{}
 
 \begin{document}
 \maketitle
+\section{Requirement}
+We need to find a way to figure out whether a given probe image is in the image gallery or not.
+\section{Idea}
+In PCA, we train the model on all the gallery images to find the covariance matrix and the eigenvectors. In order to test a probe image, we calculate its eigen- coefficients using the above-calculated eigenvectors. We then do the closest fit of these eigencoefficients with the pre-existing ones. We do this by taking the argument of the norm of the difference between the eigen coefficient of the probe image with each of the gallery images. The smallest norm value corresponds to the best match for the image.
+
+\[ j_{p} = arg min_{l}\| \textbf{a}_{p} - \textbf{a}_{l}\|_{2}^{2}\]
+
+In the paper on PCA by Turk and Petland, they suggested that we keep a threshold for the value of this minimum norm. The idea is that if the best match distance is less than the threshold value, we consider the face to be recognized as the same person. If it is greater than the threshold, we claim that the picture is someone we never saw, even though the best match can be found numerically.
+
+\medskip
+
+Extending upon this idea, we do the following. For every probe image in the training set, we find the $j_p$ value along with the norm value with every gallery image. If all of these norms exceed a threshold, we classify the image as unknown or that which has no matching identity. Otherwise, we find the $j_p$ value corresponding to that probe image and declare it identified.
+
+\section{Code and Results}
+The code for the same is implemented in the code directory. We received  17 false positives (anomaly image/person which was concluded to be in the gallery) and 38 false negatives (image/person from the gallery which was identified to be out of it).
+
+\medskip
+
+We noticed differences in the result with different values of k. For k = 25, false negatives dropped to 28. For k = 10, we got 19 false positives and 21 false negatives. 
+
+
 \end{document}
+
