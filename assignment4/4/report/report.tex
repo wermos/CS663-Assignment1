@@ -3,7 +3,7 @@
 \usepackage[DIV=12]{typearea}
 \usepackage{microtype}
 \usepackage[shortlabels]{enumitem}
-\usepackage{mathtools, amssymb}
+\usepackage{mathtools, amssymb,nccmath}
 \usepackage{bm}
 \setlength{\parindent}{0em}
 \title{5}
@@ -59,7 +59,50 @@ This implies
 	\end{aligned}
 \end{equation}
 Hence, the eigenvectors of a symmetric matrix are orthonormal.
+\item $\bm{\tilde{x}}_i=\bm{\overline{x}}+\sum_{l=1}^{k}\bm{V}_l\alpha_{il}$.
+
+Consider, 
+\begin{equation}
+	\begin{aligned}
+		\frac{1}{N}\sum_{i=1}^{N}\|\bm{\tilde{x}}_i-\bm{x}_i\|_2^2
+		&= \frac{1}{N}\sum_{i=1}^{N}\|\underbrace{\bm{\overline{x}}+\sum_{l=1}^{k}\bm{V}_l\alpha_{il}}_{\bm{\tilde{x}}_i}-\underbrace{(\bm{\overline{x}}+\bm{V}\alpha_i)}_{\bm{x}_i}\|_2^2\\
+		&= \frac{1}{N}\sum_{i=1}^{N}\|\underbrace{\bm{\overline{x}}+\sum_{l=1}^{k}\bm{V}_l\alpha_{il}}_{\bm{\tilde{x}}_i}-\underbrace{(\bm{\overline{x}}+\sum_{l=1}^{N}\bm{V}_l\alpha_{il})}_{\bm{x}_i}\|_2^2\\
+		&= \frac{1}{N}\sum_{i=1}^{N}\left\|{-\sum_{l=k+1}^{N}\bm{V}_l\alpha_{il}}\right\|_2^2\\
+		&= \frac{1}{N}\sum_{i=1}^{N}\left\|{\sum_{l=k+1}^{N}\bm{V}_l\alpha_{il}}\right\|_2^2\\
+		&= \frac{1}{N}\sum_{i=1}^{N}\left(\left({\sum_{l=k+1}^{N}\bm{V}_l\alpha_{il}}\right)^T\left({\sum_{l=k+1}^{N}\bm{V}_l\alpha_{il}}\right)\right) & \hfill{(\|\bm{x}\|_2^2=\bm{x}^T\bm{x})}\\
+		&= \frac{1}{N}\sum_{i=1}^{N}\left({\sum_{l=k+1}^{N}\bm{V}_l^T\bm{V}_l\alpha_{il}^2}\right) & \hfill{(\bm{V}_i^T\bm{V}_j = 0 \text{ for } i\neq j)}\\
+		&= \frac{1}{N}\sum_{i=1}^{N}{\sum_{l=k+1}^{N}\alpha_{il}^2} & \hfill{(\bm{V}_i^T\bm{V}_i = 1)}\\
+	\end{aligned}
+\end{equation}
+As $\alpha_{il}$ are small for $l>k$, $\mfrac{1}{N}\sum_{i=1}^{N}\|\bm{\tilde{x}}_i-\bm{x}_i\|_2^2$ is also small.
+
+We know that $\bm{C} =\mfrac{1}{N-1}\bm{X}\bm{X}^T$, and $\bm{X}=\bm{V}\bm{S}\bm{U}^T$ which implies $\bm{C}=\mfrac{1}{N-1}\bm{V}\bm{S}\bm{S}^T\bm{V}^T$.
+
+So, the eigenvalues $\lambda_i$ for $\bm{C}$ is $\mfrac{1}{N-1}$ times the respective singular values of $\bm{X}$.
+
+Using this we can derive the following
+\begin{equation}
+	\frac{1}{N}\sum_{i=1}^{N}\|\bm{\tilde{x}}_i-\bm{x}_i\|_2^2 = \frac{N}{N-1}\sum_{i=k+1}^{N}\lambda_i\approx\sum_{i=k+1}^{N}\lambda_i
+\end{equation}
+Again, as these eigenvalues are small, the overall error is also small.
+% We know that,
+% \begin{equation}
+% 	\begin{aligned}
+% 		\bm{x}_i &= \bm{\overline{x}}+\alpha_{il}\bm{V}_l\\
+% 		\bm{x}_i -\bm{\overline{x}} &= +\alpha_{il}\bm{V}_l\\
+% 		\bm{V}_l^T(\bm{x}_i -\bm{\overline{x}}) &= \alpha_{il}\\
+% 		(\bm{x}_i^T -\bm{\overline{x}}^T)\bm{V}_l &= \alpha_{il}\\
+% 	\end{aligned}
+% \end{equation}
 \item 
-\item 
+Let $\bm{X}=\begin{bmatrix}X_1 & X_2\end{bmatrix}^T$. Now, $\bm{C}$ is a $2\times2$ covariance matrix with $\bm{C}_{i,j}=\operatorname{cov}(X_i, X_j)$
+
+Since, $X_1, X_2$ are uncorrelated, $\operatorname{cov}(X_i, X_j)=0$ when $i\neq j$ and $\operatorname{cov}(X_i, X_i)=\operatorname{variance}(X_i)$.
+
+Hence $\bm{C_1}=\begin{bmatrix}100 & 0\\0&1\end{bmatrix}$ and $\bm{C_2}=\begin{bmatrix}1 & 0\\0&1\end{bmatrix}$.
+
+The principal components are the eigenvectors of $\bm{C}$. In this context, it means set of uncorrelated vectors that can be used to express any $\bm{X}$.
+
+Since, $X_1, X_2$ are already given as uncorrelated, the principal components for both cases are the standard unit vectors $e_1, e_2$ which are also the eigenvectors of  $\bm{C}$.
 \end{enumerate}
 \end{document}
