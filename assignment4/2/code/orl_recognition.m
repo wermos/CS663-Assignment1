@@ -35,18 +35,15 @@ k = 100;
 % for the i'th gallery image.
 gallery_coeffs = eigenvectors' * galleryImageData;
 
-% a counter to keep track of how many times the system recognized the
-% face correctly.
-
 threshold = 10000;
 count = 0;
 false_positive = 0;
 false_negative = 0;
 positive = 0;
+
 % load in testing data
 for j = 1:num_testing_rows
-    
-      % The correct face number
+    % The correct face number
     face_num = str2double(testingArray(j, 2));
 
     testData = reshape(double(imread(testingArray(j, 1))), [], 1);
@@ -62,20 +59,15 @@ for j = 1:num_testing_rows
         norms(k) = norm(gallery_coeffs_intermediate(:, k));
     end
     
-    
     if all(norms > threshold)
-        if(face_num <32)
-        false_negative = false_negative + 1;
+        if face_num < 32
+            false_negative = false_negative + 1;
         end
-    
     else
-        if(face_num >32)
+        if face_num > 32
             false_positive = false_positive + 1;
         end
-
     end
-
-       
 end
 
 false_positive
