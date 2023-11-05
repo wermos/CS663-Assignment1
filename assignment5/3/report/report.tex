@@ -2,8 +2,8 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage{microtype}
-\usepackage{mathtools, amssymb}
-
+\usepackage{mathtools, amssymb, bm, nccmath}
+\usepackage[shortlabels]{enumitem}
 \title{3}
 \date{}
 
@@ -11,4 +11,129 @@
 
 \begin{document}
 \maketitle
+$\bm{A}\in\mathbb{R}^{m \times n}$ where $m \leq n$.
+
+Now, $\bm{P}=\bm{A}^T\bm{A}\in\mathbb{R}^{n \times n}$ and $\bm{Q}=\bm{A}\bm{A}^T\in\mathbb{R}^{m \times m}$
+\begin{enumerate}[(a)]
+	\item Now for $\bm{y}\in\mathbb{R}^n$, we have {\label{itm:a}}
+	\begin{equation}
+		\begin{aligned}
+			\bm{y}^T\bm{P}\bm{y}
+			&=\bm{y}^T\bm{A}^T\bm{A}\bm{y}\\
+			&=(\bm{A}\bm{y})^T\bm{A}\bm{y}\\
+			&=\|\bm{A}\bm{y}\|_2^2\\
+			\text{Hence } \bm{y}^T\bm{P}\bm{y}&\geq0&\hfill{(\text{$\|\cdot\| \geq 0$})}\\
+		\end{aligned}
+	\end{equation}
+	Similarly, for $\bm{z}\in\mathbb{R}^m$, we have 
+	\begin{equation}
+		\begin{aligned}
+			\bm{z}^T\bm{Q}\bm{z}
+			&=\bm{z}^T\bm{A}\bm{A}^T\bm{z}\\
+			&=(\bm{A}^T\bm{z})^T\bm{A}\bm{z}\\
+			&=\|\bm{A}^T\bm{z}\|_2^2\\
+			\text{Hence } \bm{z}^T\bm{Q}\bm{z}&\geq0\\
+		\end{aligned}
+	\end{equation}
+	Now, let $\bm{u}\in\mathbb{R}^n$ be an eigenvector of $\bm{P}$ with eigenvalue $\lambda$.
+	\begin{equation}
+		\begin{aligned}
+			\text{$\lambda<0\Rightarrow$ } \bm{u}^T\bm{P}\bm{u}
+			&=\bm{u}^T(\bm{P}\bm{u})\\
+			&=\bm{u}^T(\lambda\bm{u})\\
+			&=\lambda\bm{u}^T\bm{u}\\
+			&=\lambda\|\bm{u}\|_2^2\\
+			\text{Hence $\lambda<0\Rightarrow$ } \bm{u}^T\bm{P}\bm{u}&<0
+		\end{aligned}
+	\end{equation}
+	But $\bm{y}^T\bm{P}\bm{y}\geq0$ for any $\bm{y}\in\mathbb{R}^n$, hence the eigenvalues of $\bm{P}$ are non-negative.
+
+	Similarly, let $\bm{v}\in\mathbb{R}^m$ be an eigenvector of $\bm{Q}$ with eigenvalue $\mu$.
+	\begin{equation}
+		\begin{aligned}
+			\text{$\mu<0\Rightarrow$ } \bm{v}^T\bm{Q}\bm{v}
+			&=\bm{v}^T(\bm{Q}\bm{v})\\
+			&=\bm{v}^T(\mu\bm{v})\\
+			&=\mu\bm{v}^T\bm{v}\\
+			&=\mu\|\bm{v}\|_2^2\\
+			\text{Hence $\mu<0\Rightarrow$ }\bm{v}^T\bm{Q}\bm{v}&<0
+		\end{aligned}
+	\end{equation}
+	But $\bm{v}^T\bm{Q}\bm{v}\geq0$ for any $\bm{y}\in\mathbb{R}^m$, hence the eigenvalues of $\bm{Q}$ are also non-negative.
+	\item Here, $\bm{u}$ eigenvector of $\bm{P}$ with eigenvalue $\lambda$ and $\bm{v}$ eigenvector of $\bm{Q}$ with eigenvalue $\mu$. 
+ 	They have $n$ and $m$ elements respectively. 
+
+	Now, 
+	\begin{equation}
+		\begin{aligned}
+			% \text{$\bm{P}\bm{u}=\lambda\bm{u}$ }
+			\bm{Q}(\bm{A}\bm{u})
+			&=\bm{A}\bm{A}^T(\bm{A}\bm{u})\\
+			&=\bm{A}(\bm{A}^T\bm{A})\bm{u}\\
+			&=\bm{A}(\bm{P}\bm{u})\\
+			&=\bm{A}\lambda\bm{u}&\hfill{(\text{$\bm{P}\bm{u}=\lambda\bm{u}$})}\\
+			\text{ Hence }\bm{Q}(\bm{A}\bm{u})&=\lambda(\bm{A}\bm{u})\\
+		\end{aligned}
+	\end{equation}
+	Similarly, 
+	\begin{equation}
+		\begin{aligned}
+			% \text{$\bm{P}\bm{u}=\lambda\bm{u}$ }
+			\bm{P}(\bm{A}^T\bm{v})
+			&=\bm{A}^T\bm{A}(\bm{A}^T\bm{v})\\
+			&=\bm{A}^T(\bm{A}\bm{A}^T)\bm{v}\\
+			&=\bm{A}^T(\bm{Q}\bm{v})\\
+			&=\bm{A}^T\mu\bm{v}&\hfill{(\text{$\bm{Q}\bm{v}=\mu\bm{v}$})}\\
+			\text{ Hence }\bm{P}(\bm{A}^T\bm{v})&=\mu(\bm{A}^T\bm{v})\\
+		\end{aligned}
+	\end{equation}
+	Hence, $\bm{A}\bm{u}$ is an eigenvector of $\bm{Q}$ with eigenvalue $\lambda$ and $\bm{A}^T\bm{v}$ is an eigenvector of $\bm{P}$ with eigenvalue $\mu$.
+	\item {\label{itm:c}}
+	Here, $\bm{v}_i$ eigenvector of $\bm{Q}$ with eigenvalue $\mu$ and $\bm{u}_i\triangleq\mfrac{\bm{A}^T \bm{v}_i}{\|\bm{A}^T \bm{v}_i\|_2}$
+
+	Consider,
+	\begin{equation}
+		\begin{aligned}
+			% \text{$\bm{P}\bm{u}=\lambda\bm{u}$ }
+			\bm{A}\bm{u}_i
+			&=\bm{A}\frac{\bm{A}^T \bm{v}_i}{\|\bm{A}^T \bm{v}_i\|_2}\\
+			&=\frac{\bm{A}\bm{A}^T \bm{v}_i}{\|\bm{A}^T \bm{v}_i\|_2}\\
+			&=\frac{\bm{Q} \bm{v}_i}{\|\bm{A}^T \bm{v}_i\|_2}\\
+			&=\frac{\mu \bm{v}_i}{\|\bm{A}^T \bm{v}_i\|_2}\\
+			% \text{ Hence }\bm{A}\bm{u}_i&=\gamma_i\bm{v}_i \text{ where $\gamma_i=\frac{\mu}{\|\bm{A}^T \bm{v}_i\|_2}$}\\
+		\end{aligned}
+	\end{equation}
+	Hence, there exists $\gamma_i=\mfrac{\mu}{\|\bm{A}^T \bm{v}_i\|_2}$ such that $\bm{A}\bm{u}_i=\gamma_i\bm{v}_i$.
+	Also $\gamma_i$ is non-negative as the eigenvalue of $\bm{Q}$ ($\mu$) is non-negative as shown in \ref{itm:a}.
+	\item We know that $\bm{P}$ will have $n$ eigenvectors and $\bm{Q}$ will have $m$ eigenvectors. Since $m\leq n$, the following holds 
+	\begin{equation}{\label{eq:svduv}}
+		\bm{A}\bm{u}_i=
+		\begin{cases}
+			\gamma_i\bm{v}_i & \text{ if } i\in \{1,2,\ldots,m\} \text{ (from \ref{itm:c}) }\\
+			0_{m} & \text{ if } i\in \{m+1, m+2, \ldots, n\}
+		\end{cases}
+	\end{equation}
+	Construct $\bm{U}=\begin{bmatrix}
+		\bm{v}_1 & \bm{v}_2 & \cdots & \bm{v}_m
+	\end{bmatrix}$,  $\bm{V}=\begin{bmatrix}
+		\bm{u}_1 & \bm{u}_2 & \cdots & \bm{u}_n
+	\end{bmatrix}$ and $\bm{\Gamma}$ as a $m\times n$ rectangular diagonal matrix with diagonal entries $\gamma_i$ as shown below
+	\begin{equation}
+		\bm{\Gamma}=\begin{bmatrix}
+			\gamma_1 & 0 & \cdots & 0 & 0 & \cdots & 0\\
+			0 & \gamma_2 & \cdots & 0 & 0 & \cdots & 0\\
+			\vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots\\
+			0 & 0 & \cdots & \gamma_m & 0 & \cdots & 0\\
+		\end{bmatrix}
+	\end{equation}
+	Note that $\bm{U}$, $\bm{V}$ are orthogonal matrices as $\bm{u}_i^T\bm{u}_j=\delta_{ij}$, $\bm{v}_i^T\bm{v}_j=\delta_{ij}$ (proved in the footnote 1 of the homework sheet).
+	Now, \ref{eq:svduv} can also be written as
+	\begin{equation}{\label{eq:svd}}
+		\begin{aligned}
+			\bm{A}\bm{V}&=\bm{U}\bm{\Gamma}\\
+			\bm{A}&=\bm{U}\bm{\Gamma}\bm{V}^T&\hfill{(\bm{V}^{-1}=\bm{V}^T)}
+		\end{aligned}
+	\end{equation}
+	Equation \ref{eq:svd} gives us the singular value decomposition of any matrix $\bm{A}$, where $\bm{U}, \bm{V}$ are the corresponding orthogonal matrices and $\bm{\Gamma}$ corresponds to $\bm{\Sigma}$ matrix and $\gamma_i$ indeed corresponds to singular values as they are also non-negative as proved in \ref{itm:c}.
+\end{enumerate}
 \end{document}
