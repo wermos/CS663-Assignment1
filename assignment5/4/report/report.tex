@@ -1,9 +1,11 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper, landscape]{article}
 
+\usepackage[DIV=18]{typearea}
 \usepackage[utf8]{inputenc}
 \usepackage{microtype}
 \usepackage{mathtools, amssymb}
-
+\usepackage[colorlinks=true]{hyperref}
+\renewcommand{\d}{\, \mathrm{d}}
 \title{4}
 \date{}
 
@@ -11,4 +13,70 @@
 
 \begin{document}
 \maketitle
+\section{Approach}
+We are assuming the images are 2-D and carry out Fourier analysis in continuous domain.
+For given equations,
+\begin{equation}{\label{eq:given}}
+	\begin{aligned}
+		g_1(x,y) &= f_1(x,y) + h_2(x,y) \ast f_2(x,y)\\
+		g_2(x,y) &= h_1(x,y) \ast f_1(x,y) + f_2(x,y)
+	\end{aligned}
+\end{equation}
+Let $F_i, G_i, H_i$ be the Fourier transformations of $f_i, g_i, h_i$ respectively. After applying Fourier transformation on both sides to \ref{eq:given}, we get
+\begin{subequations}
+	\begin{align}
+		{\label{eq:f1}}G_1(\mu,\nu) &= F_1(\mu,\nu) + H_2(\mu,\nu)F_2(\mu,\nu)\\
+		{\label{eq:f2}}G_2(\mu,\nu) &= H_1(\mu,\nu)F_1(\mu,\nu) + F_2(\mu,\nu)
+	\end{align}
+\end{subequations}
+Now, we can solve for $F_1$, $F_2$ by multiplying \ref{eq:f1} by $H_1$ and \ref{eq:f2} by $H_2$ and then subtracting these equations from \ref{eq:given}
+\begin{equation}
+	% \begin{aligned}
+	% 	G_1 &= F_1 + H_2 F_2\\
+	% 	G_2 &= H_1F_1 + F_2\\
+	% \end{aligned}
+	% \text{\quad multiplying by $H_1$\quad}
+	\begin{aligned}
+		H_1G_1 &= H_1F_1 + H_1H_2 F_2\\
+		H_2G_2 &= H_2H_1F_1 + H_2F_2
+	\end{aligned}
+	\quad\Rightarrow\quad
+	\begin{aligned}
+		H_1G_1 - (G_2) &= H_1F_1 + H_1H_2F_2 - (H_1F_1 + F_2)\\
+		H_2G_2 - (G_1) &= H_2H_1F_1 + H_2F_2 - (F_1 + H_2F_2)
+	\end{aligned}
+	\quad\Rightarrow\quad
+	\begin{aligned}
+		H_1G_1 - G_2 &= H_1H_2F_2 - F_2\\
+		H_2G_2 - G_1 &= H_2H_1F_1 - F_1
+	\end{aligned}
+	\quad\Rightarrow\quad
+	\begin{aligned}
+		H_1G_1 - G_2 &= F_2(H_1H_2 - 1)\\
+		H_2G_2 - G_1 &= F_1(H_2H_1 - 1)
+	\end{aligned}
+\end{equation}
+Now, we can get $f_1, f_2$ by taking inverse Fourier transform of $F_1, F_2$ respectively.
+\begin{equation}
+	\begin{aligned}
+		f_1(x,y) &= \mathcal{F}^{-1}\left(\frac{H_1G_1 - G_2}{H_1H_2 - 1}\right)(\mu,\nu)\\
+		f_2(x,y) &= \mathcal{F}^{-1}\left(\frac{H_2G_2 - G_1}{H_1H_2 - 1}\right)(\mu,\nu)\\
+	\end{aligned}
+	\quad\text{where}\quad
+	\left(
+	\begin{aligned}
+		F_1 &= \frac{H_1G_1 - G_2}{H_1H_2 - 1}\\
+		F_2 &= \frac{H_2G_2 - G_1}{H_1H_2 - 1}\\
+	\end{aligned}
+	\quad\text{and}\quad
+	\begin{aligned}
+		% 1-D
+		% f_1 &= \int_{-\infty}^{\infty}F_1(\mu)e^{j2\pi\mu t}\d\mu\\
+		% f_2 &= \int_{-\infty}^{\infty}F_2(\mu)e^{j2\pi\mu t}\d\mu\\
+		f_1(x,y) &= \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}F_1(\mu, \nu)e^{j2\pi(\mu x+\nu y)}\d\mu\\
+		f_2(x,y) &= \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}F_2(\mu, \nu)e^{j2\pi(\mu x+\nu y)}\d\mu\\
+	\end{aligned}
+	\right)
+\end{equation}
+\section{Formula}
 \end{document}
