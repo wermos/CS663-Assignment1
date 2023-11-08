@@ -17,11 +17,17 @@ function [] = process(image_name, sigma_noise, sigma_bilateral, dimensions)
     filename = "../images/" + image_name + ",σ_noise" + string(sigma_noise) + ".png";
     save_image(image_with_gaussian_noise, filename);
 
-    % Apply bilateral on original image
-    image_output = mybilateralfilter(image, sigma_bilateral);
-    filename = "../images/" + image_name + ",σ_spatial" + string(sigma_bilateral(1)) + ",σ_range" + string(sigma_bilateral(2)) + ".png";
-    save_image(image_output, filename);
+    % ---------------- a) --------------------
 
+    % ---------------- b) --------------------
+
+    % ---------------- c) --------------------
+    % Apply bilateral on original image
+    for sigma_spatial_range = sigma_bilateral
+        image_output = mybilateralfilter(image, sigma_spatial_range);
+        filename = "../images/" + image_name + ",σ_spatial" + string(sigma_spatial_range(1)) + ",σ_range" + string(sigma_spatial_range(2)) + ".png";
+        save_image(image_output, filename);
+    end
     % Apply bilateral on noisy image
     for sigma_spatial_range = sigma_bilateral
         image_output = mybilateralfilter(image_with_gaussian_noise, sigma_spatial_range);
