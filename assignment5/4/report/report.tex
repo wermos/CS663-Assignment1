@@ -13,7 +13,7 @@
 
 \begin{document}
 \maketitle
-\section{Approach}
+\section{Approach}{\label{sec:a}}
 We are assuming the images are 2-D and carry out Fourier analysis in continuous domain.
 For given equations,
 \begin{equation}{\label{eq:given}}
@@ -29,7 +29,7 @@ Let $F_i, G_i, H_i$ be the Fourier transformations of $f_i, g_i, h_i$ respective
 		{\label{eq:f2}}G_2(\mu,\nu) &= H_1(\mu,\nu)F_1(\mu,\nu) + F_2(\mu,\nu)
 	\end{align}
 \end{subequations}
-Now, we can solve for $F_1$, $F_2$ by multiplying \ref{eq:f1} by $H_1$ and \ref{eq:f2} by $H_2$ and then subtracting these equations from \ref{eq:given}
+Now, we can solve for $F_1$, $F_2$ by multiplying \ref{eq:f1} by $H_1$ and \ref{eq:f2} by $H_2$ then subtracting these equations from \ref{eq:given} and rearranging the terms
 \begin{equation}
 	% \begin{aligned}
 	% 	G_1 &= F_1 + H_2 F_2\\
@@ -57,7 +57,7 @@ Now, we can solve for $F_1$, $F_2$ by multiplying \ref{eq:f1} by $H_1$ and \ref{
 	\end{aligned}
 \end{equation}
 Now, we can get $f_1, f_2$ by taking inverse Fourier transform of $F_1, F_2$ respectively.
-\begin{equation}
+\begin{equation}{\label{eq:answer}}
 	\begin{aligned}
 		f_1(x,y) &= \mathcal{F}^{-1}\left(\frac{H_1G_1 - G_2}{H_1H_2 - 1}\right)(\mu,\nu)\\
 		f_2(x,y) &= \mathcal{F}^{-1}\left(\frac{H_2G_2 - G_1}{H_1H_2 - 1}\right)(\mu,\nu)\\
@@ -65,18 +65,39 @@ Now, we can get $f_1, f_2$ by taking inverse Fourier transform of $F_1, F_2$ res
 	\quad\text{where}\quad
 	\left(
 	\begin{aligned}
-		F_1 &= \frac{H_1G_1 - G_2}{H_1H_2 - 1}\\
-		F_2 &= \frac{H_2G_2 - G_1}{H_1H_2 - 1}\\
+		F_1 (\mu,\nu) &= \frac{H_1 (\mu,\nu)G_1 (\mu,\nu) - G_2 (\mu,\nu)}{H_1 (\mu,\nu)H_2 (\mu,\nu) - 1}\\
+		F_2 (\mu,\nu) &= \frac{H_2 (\mu,\nu)G_2 (\mu,\nu) - G_1 (\mu,\nu)}{H_1 (\mu,\nu)H_2 (\mu,\nu) - 1}\\
 	\end{aligned}
 	\quad\text{and}\quad
 	\begin{aligned}
 		% 1-D
 		% f_1 &= \int_{-\infty}^{\infty}F_1(\mu)e^{j2\pi\mu t}\d\mu\\
 		% f_2 &= \int_{-\infty}^{\infty}F_2(\mu)e^{j2\pi\mu t}\d\mu\\
-		f_1(x,y) &= \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}F_1(\mu, \nu)e^{j2\pi(\mu x+\nu y)}\d\mu\\
-		f_2(x,y) &= \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}F_2(\mu, \nu)e^{j2\pi(\mu x+\nu y)}\d\mu\\
+		f_1(x,y) &= \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}F_1(\mu, \nu)e^{j2\pi(\mu x+\nu y)}\d\mu\d\nu\\
+		f_2(x,y) &= \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}F_2(\mu, \nu)e^{j2\pi(\mu x+\nu y)}\d\mu\d\nu\\
 	\end{aligned}
 	\right)
 \end{equation}
-\section{Formula}
+\section{Problem}
+An issue can arise when the denominator in \ref{eq:answer} is zero, i.e., $H_1(\mu,\nu)H_2(\mu,\nu)=1$ for some $(\mu,\nu)$ . In this section we show that this is indeed possible.
+
+Since the blur kernels preserves the brightness of the image, we can assume they are normalized, i.e.,
+\begin{equation}
+	\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}h(x,y)\d x\d y = 1 \quad\text{and}\quad |H(\mu,\nu)|\leq1\ \forall (\mu,\nu)
+\end{equation}
+Under this assumption, we can see that $H_1(0,0)=H_2(0,0)=1$ as
+\begin{equation}
+	\begin{aligned}
+		H(\mu, \nu)=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}h(x, y)e^{-j2\pi(\mu x+\nu y)}\d x\d y
+		\quad\Rightarrow\quad
+		H(0, 0)
+		&=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}h(x, y)e^{-j2\pi(0 x+0 y)}\d x\d y\\
+		&=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}h(x, y)e^{0}\d x\d y\\
+		&=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}h(x, y)\d x\d y\\
+		H(0, 0)&=1\\
+	\end{aligned}
+\end{equation}
+So at $(\mu,\nu)=(0,0)$, both $F_1, F_2$ are undefined due to division by zero.
+
+Hence, the formula given in \ref{sec:a} isn't foolproof.
 \end{document}
