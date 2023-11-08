@@ -7,7 +7,7 @@ sigma_spatial = [3 6];
 sigma_range = [15 30];
 sigma_bilateral = [sigma_spatial; sigma_range];
 
-image_names = ["barbara256", "stream"]
+image_names = ["barbara256", "stream"];
 for image_name = image_names
     process(image_name, sigma_noise, sigma_bilateral, dimensions, size_patch, size_neighborhood, K);
 end
@@ -25,26 +25,26 @@ function [] = process(image_name, sigma_noise, sigma_bilateral, dimensions, size
     save_image(image_with_gaussian_noise, filename);
 
     % ---------------- a) --------------------
+    % image_output = myPCADenoising1(image, sigma_noise, size_patch);
     % filename = "../images/" + image_name + "pca1" + ",σ_noise" + string(sigma_noise) + ".png";
-    % image_output = myPCADenoising1(image, size_patch);
     % save_image(image_output, filename);
     % ---------------- b) --------------------
+    % image_output = myPCADenoising2(image_with_gaussian_noise, sigma_noise, size_patch, size_neighborhood, K);
     % filename = "../images/" + image_name + "pca2" + ",σ_noise" + string(sigma_noise) + ".png";
-    % image_output = myPCADenoising2(image_with_gaussian_noise, size_patch, size_neighborhood, K);
     % save_image(image_output, filename);
     % ---------------- c) --------------------
     % Apply bilateral on original image
-    for sigma_spatial_range = sigma_bilateral
-        image_output = mybilateralfilter(image, sigma_spatial_range);
-        filename = "../images/" + image_name + ",σ_spatial" + string(sigma_spatial_range(1)) + ",σ_range" + string(sigma_spatial_range(2)) + ".png";
-        save_image(image_output, filename);
-    end
-    % Apply bilateral on noisy image
-    for sigma_spatial_range = sigma_bilateral
-        image_output = mybilateralfilter(image_with_gaussian_noise, sigma_spatial_range);
-        filename = "../images/" + image_name + ",σ_noise" + string(sigma_noise) + ",σ_spatial" + string(sigma_spatial_range(1)) + ",σ_range" + string(sigma_spatial_range(2)) + ".png";
-        save_image(image_output, filename);
-    end
+    % for sigma_spatial_range = sigma_bilateral
+    %     image_output = mybilateralfilter(image, sigma_spatial_range);
+    %     filename = "../images/" + image_name + ",σ_spatial" + string(sigma_spatial_range(1)) + ",σ_range" + string(sigma_spatial_range(2)) + ".png";
+    %     save_image(image_output, filename);
+    % end
+    % % Apply bilateral on noisy image
+    % for sigma_spatial_range = sigma_bilateral
+    %     image_output = mybilateralfilter(image_with_gaussian_noise, sigma_spatial_range);
+    %     filename = "../images/" + image_name + ",σ_noise" + string(sigma_noise) + ",σ_spatial" + string(sigma_spatial_range(1)) + ",σ_range" + string(sigma_spatial_range(2)) + ".png";
+    %     save_image(image_output, filename);
+    % end
 end
 
 function image_with_gaussian_noise = gaussian_noise_adder(image_input, mean, sigma)
