@@ -10,14 +10,10 @@ sigma_bilateral = [sigma_spatial; sigma_range];
 image_names = ["barbara256", "stream"];
 for image_name = image_names
     process(image_name, sigma_noise, sigma_bilateral, dimensions, size_patch, size_neighborhood, K);
-    % ---------------- a) --------------------
-    image_output = myPCADenoising1(image, sigma_noise);
-    filename = "../images/" + image_name + "pca1" + ",σ_noise20.png";
-    save_image(image_output, filename);
 end
 
 function [] = process(image_name, sigma_noise, sigma_bilateral, dimensions, size_patch, size_neighborhood, K)
-    image = imread("../images/"+ image_name +".png");
+    image = imread("../images/" + image_name + ".png");
     % Image Cropping
     image = image(1:dimensions(1), 1:dimensions(2));
     image = double(image);
@@ -28,6 +24,10 @@ function [] = process(image_name, sigma_noise, sigma_bilateral, dimensions, size
     filename = "../images/" + image_name + ",σ_noise" + string(sigma_noise) + ".png";
     save_image(image_with_gaussian_noise, filename);
 
+    % ---------------- a) --------------------
+    image_output = myPCADenoising1(image_with_gaussian_noise, sigma_noise);
+    filename = "../images/" + image_name + "pca1" + ",σ_noise20.png";
+    save_image(image_output, filename);
     % ---------------- b) --------------------
     % image_output = myPCADenoising2(image_with_gaussian_noise, sigma_noise, size_patch, size_neighborhood, K);
     % filename = "../images/" + image_name + "pca2" + ",σ_noise" + string(sigma_noise) + ".png";
