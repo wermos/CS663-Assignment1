@@ -25,9 +25,13 @@ function [] = process(image_name, sigma_noise, sigma_bilateral, dimensions, size
     save_image(image_with_gaussian_noise, filename);
 
     % ---------------- a) --------------------
+    % filename = "../images/" + image_name + "pca1" + ",σ_noise" + string(sigma_noise) + ".png";
     % image_output = myPCADenoising1(image, size_patch);
+    % save_image(image_output, filename);
     % ---------------- b) --------------------
-    % image_output = myPCADenoising2(image, size_patch, size_neighborhood, K);
+    % filename = "../images/" + image_name + "pca2" + ",σ_noise" + string(sigma_noise) + ".png";
+    % image_output = myPCADenoising2(image_with_gaussian_noise, size_patch, size_neighborhood, K);
+    % save_image(image_output, filename);
     % ---------------- c) --------------------
     % Apply bilateral on original image
     for sigma_spatial_range = sigma_bilateral
