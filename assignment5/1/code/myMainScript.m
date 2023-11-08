@@ -1,13 +1,19 @@
 sigma_noise = 20;
 dimensions = [256;256];
+size_patch = 7;
+size_neighborhood = 31;
+K = 200;
 sigma_spatial = [3 6];
 sigma_range = [15 30];
 sigma_bilateral = [sigma_spatial; sigma_range];
-process("barbara256", sigma_noise, sigma_bilateral, dimensions);
-process("stream", sigma_noise, sigma_bilateral, dimensions);
 
-function [] = process(image_name, sigma_noise, sigma_bilateral, dimensions)
+image_names = ["barbara256", "stream"]
+for image_name = image_names
+    process(image_name, sigma_noise, sigma_bilateral, dimensions, size_patch, size_neighborhood, K);
+
+function [] = process(image_name, sigma_noise, sigma_bilateral, dimensions, size_patch, size_neighborhood, K)
     image = imread("../images/"+ image_name +".png");
+    % Image Cropping
     image = image(1:dimensions(1), 1:dimensions(2));
     image = double(image);
     
@@ -18,9 +24,9 @@ function [] = process(image_name, sigma_noise, sigma_bilateral, dimensions)
     save_image(image_with_gaussian_noise, filename);
 
     % ---------------- a) --------------------
-
+    % image_output = myPCADenoising1(image, size_patch);
     % ---------------- b) --------------------
-
+    % image_output = myPCADenoising2(image, size_patch, size_neighborhood, K);
     % ---------------- c) --------------------
     % Apply bilateral on original image
     for sigma_spatial_range = sigma_bilateral
