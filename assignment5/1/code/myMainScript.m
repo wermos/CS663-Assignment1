@@ -10,6 +10,7 @@ sigma_bilateral = [sigma_spatial; sigma_range];
 image_names = ["barbara256", "stream"]
 for image_name = image_names
     process(image_name, sigma_noise, sigma_bilateral, dimensions, size_patch, size_neighborhood, K);
+end
 
 function [] = process(image_name, sigma_noise, sigma_bilateral, dimensions, size_patch, size_neighborhood, K)
     image = imread("../images/"+ image_name +".png");
